@@ -1,0 +1,42 @@
+
+==============================================================================================
+E8  rule over form field VALUES across the post-quantum covered revision
+==============================================================================================
+  case                                           level          truth       verdict
+  ---------------------------------------------- -------------- ----------- -------
+  form order-B, honest                           FORM_FILLING   legitimate  accept
+  form order-B, t2 field-fill forgery            FORM_FILLING   ATTACK      reject
+  form order-B, field-fill + NeedAppearances     FORM_FILLING   ATTACK      reject
+  plain order-B, honest                          FORM_FILLING   legitimate  accept
+  plain order-B, t2 field-creation forgery       OTHER          ATTACK      reject
+  plain order-B, t2 /Contents override           OTHER          ATTACK      reject
+  plain order-A, honest                          NONE           legitimate  accept
+
+----------------------------------------------------------------------------------------------
+  evidence
+----------------------------------------------------------------------------------------------
+  form order-B, honest
+      R2'' holds: 1 ordinary field(s) unchanged across the covered revision
+  form order-B, t2 field-fill forgery
+      R2'' fails: field value changed -- amount: '1,000 USD' -> '100,000 USD'
+  form order-B, field-fill + NeedAppearances
+      R2'' fails: field value changed -- amount: '1,000 USD' -> '100,000 USD'
+  plain order-B, honest
+      R2'' holds: 0 ordinary field(s) unchanged across the covered revision
+  plain order-B, t2 field-creation forgery
+      R2'' fails: level OTHER
+  plain order-B, t2 /Contents override
+      R2'' fails: level OTHER
+  plain order-A, honest
+      R2'' holds: level NONE, no form change at all
+
+----------------------------------------------------------------------------------------------
+  corpus: 4 attacks, 3 legitimate documents
+  attacks missed 0   honest rejected 0   undecided 0
+----------------------------------------------------------------------------------------------
+  RESULT: R2'' separates the corpus cleanly. The rule the paper
+  should state is over field values, not over a diff taxonomy;
+  E6 and E7 become the two natural formulations that fail, which
+  is why the working one has to be stated where it is.
+----------------------------------------------------------------------------------------------
+

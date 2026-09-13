@@ -1,0 +1,35 @@
+
+============================================================================================
+E7  refined rule -- accept FORM_FILLING only for signature fields
+============================================================================================
+  DiffResult types seen: DiffResult, SuspiciousModification
+  !! no changed-field set on _e7_newfield.pdf; available attributes: ['add_note', 'args', 'with_traceback']
+
+  case                                         level          changed fields               cur  ref
+  -------------------------------------------- -------------- ---------------------------- ---  ---
+  form order-B, honest                         FORM_FILLING   ClassicalLayer, amount       ACC  rej
+  form order-B, t2 field-fill forgery          FORM_FILLING   ClassicalLayer, ForgedClassi ACC  rej
+  form order-B, field-fill + NeedAppearances   FORM_FILLING   ClassicalLayer, ForgedClassi ACC  rej
+  plain order-B, honest                        FORM_FILLING   ClassicalLayer               ACC  ACC
+  plain order-B, t2 field-creation forgery     OTHER          -                            rej  rej
+  plain order-B, t2 /Contents override         OTHER          -                            rej  rej
+  plain order-A, honest                        NONE                                        ACC  ACC
+
+--------------------------------------------------------------------------------------------
+  corpus: 4 attacks, 3 legitimate documents
+  rule                       attacks missed   honest rejected   undecidable
+  current (Section VI)       2                0                 0
+  refined (R2-prime)         0                1                 0
+
+  current rule accepts an attack: form order-B, t2 field-fill forgery
+      level FORM_FILLING is benign
+  current rule accepts an attack: form order-B, field-fill + NeedAppearances
+      level FORM_FILLING is benign
+  refined rule rejects an honest document: form order-B, honest
+      R2' fails: non-signature field(s) changed after the post-quantum signature: amount
+
+--------------------------------------------------------------------------------------------
+  RESULT: R2' does not cleanly separate the corpus. The numbers
+  above are the finding; do not tune the rule to improve them.
+--------------------------------------------------------------------------------------------
+

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>vn.nckh</groupId>
+  <artifactId>dssval</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <!-- Must not exceed the installed JDK (currently 17). The validator only
+         uses `var`, so 17 is ample. -->
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <dss.version>6.5</dss.version>
+    <exec.mainClass>vn.nckh.DssValidate</exec.mainClass>
+  </properties>
+
+  <dependencies>
+    <!-- PAdES validation: the EU reference implementation -->
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-pades-pdfbox</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-validation</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-service</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <!-- DSS needs one concrete IUtils implementation on the classpath -->
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-utils-apache-commons</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-crl-parser-x509crl</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <!-- 6.5 modularised further: the default policy and the CMS backend are
+         now separate artifacts that must be chosen explicitly -->
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-policy-jaxb</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+      <artifactId>dss-cms-object</artifactId>
+      <version>${dss.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.13</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>cefdigital</id>
+      <name>CEF Digital Repository</name>
+      <url>https://ec.europa.eu/digital-building-blocks/artifact/repository/esignaturedss/</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <!-- chon lop chay bang -Dexec.mainClass=..., mac dinh la DssValidate -->
+          <mainClass>${exec.mainClass}</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

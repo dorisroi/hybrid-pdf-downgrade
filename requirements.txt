@@ -1,0 +1,5 @@
+pyhanko==0.37.0
+pyhanko-certvalidator==0.32.1
+cryptography==50.0.1
+asn1crypto==1.5.1
+reportlab==4.0.4

@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: >-
+  If you use this artifact, please cite both the artifact and the paper it
+  accompanies.
+title: >-
+  Artifact for "Put the Post-Quantum Signature First: Format-Layer Downgrade
+  Resistance in Sequential Hybrid PDF Signing"
+abstract: >-
+  Code, signed PDF artifacts, test trust anchors and validator logs
+  reproducing every experimental figure in the paper. Includes the
+  attack and mitigation experiments, the pyHanko and EU DSS 6.5
+  cross-validation harnesses, and the verifier-rule probes.
+authors:
+  - family-names: "Đinh"
+    given-names: "Thị Thúy"
+    affiliation: "Thang Long University"
+  - family-names: "Lê"
+    given-names: "Phê Đô"
+    affiliation: "Thang Long University"
+  - family-names: "Nguyễn"
+    given-names: "Thị Trà My"
+    affiliation: "Thang Long University"
+license: Apache-2.0
+keywords:
+  - post-quantum cryptography
+  - hybrid signatures
+  - non-separability
+  - PDF
+  - PAdES
+  - downgrade attack

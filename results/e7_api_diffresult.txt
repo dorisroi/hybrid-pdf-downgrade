@@ -1,0 +1,6 @@
+FIELDS: ['modification_level', 'changed_form_fields']
+DOC: 
+Encodes the result of a difference analysis on two revisions.
+
+Returned by :meth:`.DiffPolicy.apply`.
+

@@ -1,0 +1,14 @@
+﻿7fb56a39e08de320b8f5914a097e365ef3efba9e619c14880b73fd3b3e345fc5  A_downgraded.pdf
+c4c9565e68638e4c757e3d6c2f07972a9dd98c76ae23fd6c88b424dc52b5921d  A_intact_hybrid.pdf
+7fb56a39e08de320b8f5914a097e365ef3efba9e619c14880b73fd3b3e345fc5  A_legit_classical_only.pdf
+77cb90d74b648c16b6bc66d3bfdacbf8bccb77b5f1ce6498549e944c4be07780  B_intact_hybrid.pdf
+76db2cf08c493f3f81bafe3adcf051e63348ae12ba8c145ef52dbbbd7fb9ab9d  B_legit_pqonly.pdf
+76db2cf08c493f3f81bafe3adcf051e63348ae12ba8c145ef52dbbbd7fb9ab9d  B_truncated_pqonly.pdf
+f1af4795fa05475c29e87c39ff27d087ed1c8c43a82ed361f26fb31c0f480337  LTA_downgraded.pdf
+3cb9caea9e61838374718a97950821e62fc0ae15b0f84cd2d1bdebe59e414919  LTA_intact_hybrid.pdf
+f1af4795fa05475c29e87c39ff27d087ed1c8c43a82ed361f26fb31c0f480337  LTA_legit_classical_only.pdf
+
+# Byte-identical pairs (proven by the hashes above):
+#   A_downgraded.pdf   == A_legit_classical_only.pdf
+#   LTA_downgraded.pdf == LTA_legit_classical_only.pdf
+#   B_truncated_pqonly.pdf == B_legit_pqonly.pdf

@@ -1,0 +1,5 @@
+3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]
+OpenSSL 3.0.15 3 Sep 2024
+java version "17.0.12" 2024-07-16 LTS
+Java(TM) SE Runtime Environment (build 17.0.12+8-LTS-286)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.12+8-LTS-286, mixed mode, sharing)

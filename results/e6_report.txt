@@ -1,0 +1,22 @@
+
+==================================================================================
+E6  can a t2 adversary change what the page shows and stay benign?
+==================================================================================
+  variant                                      level            rule
+  -------------------------------------------- ---------------- ----------
+  V0 honest order-B form document              FORM_FILLING     ACCEPTS
+  V1 fill existing field                       FORM_FILLING     ACCEPTS
+  V2 fill existing field + NeedAppearances     FORM_FILLING     ACCEPTS
+  V0b honest order-B plain document            FORM_FILLING     ACCEPTS
+  V3 create field then fill                    OTHER            rejects
+  V4 /Contents override (E4's attack)          OTHER            rejects
+
+----------------------------------------------------------------------------------
+  RESULT: the rule is DEFEATED by V1, V2
+  The page renders a forged amount while the post-quantum
+  signature sits inside the benign set. Section VI's R2 must be
+  restated: 'benign modification level' is weaker than 'no
+  revision altered page content', and E4's 0-missed figure is
+  scoped to /Contents overrides only.
+----------------------------------------------------------------------------------
+

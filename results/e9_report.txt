@@ -1,0 +1,54 @@
+
+====================================================================================================
+E9  bypasses of the verifier rules: field-name spoofing, appearance-only forgery
+====================================================================================================
+  case                                                 truth   E4      E8      E8+R1(oid)  +AP check
+  ---------------------------------------------------- ------- ------- ------- ----------- ---------
+  honest plain order-B                                 legit   ACCEPT  ACCEPT  ACCEPT      ACCEPT   
+  honest form order-B                                  legit   ACCEPT  ACCEPT  ACCEPT      ACCEPT   
+  B1a spoof: scratch, ECDSA named PQLayer              ATTACK  ACCEPT  ACCEPT  reject      reject   
+  B1b spoof: truncate A, override, ECDSA named PQLayer ATTACK  ACCEPT  ACCEPT  reject      reject   
+  B2 appearance-only forgery (/V unchanged)            ATTACK  ACCEPT  ACCEPT  ACCEPT      reject   
+
+----------------------------------------------------------------------------------------------------
+  evidence
+----------------------------------------------------------------------------------------------------
+  honest plain order-B
+      signature algorithms : {'PQLayer': '2.16.840.1.101.3.4.3.17', 'ClassicalLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : FORM_FILLING
+      E8                   : R2'' holds: 0 ordinary field(s) unchanged across the covered revision
+      R1 by algorithm      : ML-DSA signature present in field 'PQLayer'
+      +AP check            : values and 0 appearance stream(s) unchanged
+  honest form order-B
+      signature algorithms : {'PQLayer': '2.16.840.1.101.3.4.3.17', 'ClassicalLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : FORM_FILLING
+      E8                   : R2'' holds: 1 ordinary field(s) unchanged across the covered revision
+      R1 by algorithm      : ML-DSA signature present in field 'PQLayer'
+      +AP check            : values and 1 appearance stream(s) unchanged
+  B1a spoof: scratch, ECDSA named PQLayer
+      signature algorithms : {'PQLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : NONE
+      E8                   : R2'' holds: level NONE, no form change at all
+      R1 by algorithm      : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+      +AP check            : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+  B1b spoof: truncate A, override, ECDSA named PQLayer
+      signature algorithms : {'ClassicalLayer': '1.2.840.10045.4.3.2', 'PQLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : NONE
+      E8                   : R2'' holds: level NONE, no form change at all
+      R1 by algorithm      : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+      +AP check            : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+  B2 appearance-only forgery (/V unchanged)
+      signature algorithms : {'PQLayer': '2.16.840.1.101.3.4.3.17', 'ClassicalLayer': '1.2.840.10045.4.3.2', 'ForgedClassical': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : FORM_FILLING
+      /AP /N draws         : 100,000 USD
+      E8                   : R2'' holds: 1 ordinary field(s) unchanged across the covered revision
+      R1 by algorithm      : ML-DSA signature present in field 'PQLayer'
+      +AP check            : appearance stream changed after the PQ signature: amount
+
+
+E7 measurements from results/numbers.json:
+honest plain order-B | E7=ACCEPT | R2' holds: only signature fields changed (ClassicalLayer)
+honest form order-B | E7=reject | R2' fails: non-signature field(s) changed after the post-quantum signature: amount
+B1a spoof: scratch, ECDSA named PQLayer | E7=ACCEPT | R2' holds: level NONE, no form change
+B1b spoof: truncate A, override, ECDSA named PQLayer | E7=ACCEPT | R2' holds: level NONE, no form change
+B2 appearance-only forgery (/V unchanged) | E7=reject | R2' fails: non-signature field(s) changed after the post-quantum signature: amount

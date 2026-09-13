@@ -1,0 +1,26 @@
+================================================================================
+compare_runs -- baseline vs new
+================================================================================
+  baseline generated: 2026-09-13 14:05:19
+  new      generated: 2026-09-13 19:03:36
+  invariants checked: 141
+
+--- INVARIANT DIFFERENCES (0) ----------------------------------------
+  none. Every claim the paper makes reproduced exactly.
+
+--- EXPECTED DRIFT (10) -----------------------------------------------
+  C1.A.hybrid_size                       11984 ->     11970  (-14 B)
+  C1.A.inner_size                         6642 ->      6638  (-4 B)
+  C1.B.hybrid_size                       11984 ->     11972  (-12 B)
+  C1.B.inner_size                         6775 ->      6769  (-6 B)
+  E1.A.hybrid_size                       29602 ->     29600  (-2 B)
+  E1.A.inner_size                         6644 ->      6642  (-2 B)
+  E1.B.bytes_discarded                    5201 ->      5205  (+4 B)
+  E1.B.hybrid_size                       28804 ->     28808  (+4 B)
+  E2.A.hybrid_size                       64139 ->     64137  (-2 B)
+  E2.A.inner_size                        27856 ->     27854  (-2 B)
+
+================================================================================
+  RESULT: reproduced. Regenerate numbers.tex and recompile.
+================================================================================
+

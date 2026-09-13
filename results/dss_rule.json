@@ -1,0 +1,12 @@
+{
+  "validator": "DSS 6.5",
+  "attacks": 6,
+  "legitimate": 4,
+  "total": 10,
+  "naive_attacks_accepted": 4,
+  "naive_legitimate_rejected": 4,
+  "rule_decidable": 5,
+  "rule_undecidable": 5,
+  "rule_attacks_missed": 0,
+  "rule_false_positives": 0
+}
