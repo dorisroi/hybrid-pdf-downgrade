@@ -1,7 +1,7 @@
 # Put the Post-Quantum Signature First
 
-Artifact for *"Put the Post-Quantum Signature First: Format-Layer Downgrade
-Resistance in Sequential Hybrid PDF Signing"*.
+Artifact for *"Downgrading Post-Quantum Hybrid Signatures in PDF Documents: Signing Order,Incremental Updates, and the Limits of Verification 
+Rules"*.
 
 ## Reproduce in one command
 
