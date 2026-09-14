@@ -7,7 +7,7 @@
 #
 #   1.  python run_all.py      (produces results/artifacts/)
 #   2.  .\run_dss.ps1          (produces results/dss_rule.json)
-#   3.  python run_all.py      (folds the DSS figures into numbers.tex)
+#   3.  python run_all.py      (folds the DSS figures into numbers.json)
 
 # NOT "Stop": in Windows PowerShell 5.1 a native program writing to stderr
 # surfaces as an ErrorRecord, and SLF4J always greets us there. Exit codes are

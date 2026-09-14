@@ -246,7 +246,7 @@ def compare(base, new):
     ok = not regressions and not excessive and not missing and not added
     print("\n" + "=" * 80)
     if ok:
-        print("  RESULT: reproduced. Regenerate numbers.tex and recompile.")
+        print("  RESULT: reproduced. Experimental JSON matches the reference checks.")
     else:
         print("  RESULT: NOT reproduced. Do not recompile the paper until the")
         print("  differences above are explained -- the text may assert something")

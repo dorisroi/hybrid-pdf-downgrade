@@ -16,7 +16,6 @@ Everything a run produces lands in results/reproduce/<timestamp>/:
     REVIEWER_REPORT.md   the answers, one verdict per question
     compare.txt          compare_runs.py against results/reference/
     numbers.json         the full record of this run
-    numbers.tex          the macros the paper \\input{}s
     run_all.log, dss.log
 
 Exit status 0 only if every question is answered PASS and every invariant the
@@ -62,9 +61,7 @@ from hybridpdf import paths  # noqa: E402
 
 REFERENCE_DIR = os.path.join(RESULTS := paths.RESULTS, "reference")
 REFERENCE_JSON = os.path.join(REFERENCE_DIR, "numbers.reference.json")
-REFERENCE_TEX = os.path.join(REFERENCE_DIR, "numbers.reference.tex")
 NUMBERS_JSON = os.path.join(RESULTS, "numbers.json")
-NUMBERS_TEX = os.path.join(paths.GENERATED, "numbers.tex")
 DSS_JSON = os.path.join(RESULTS, "dss_rule.json")
 
 PASS, FAIL, NOTE = "PASS", "FAIL", "NOTE"
@@ -97,18 +94,6 @@ def run_logged(cmd, log_path, cwd=ROOT):
             log.write(line)
             sys.stdout.write(line)
         return proc.wait()
-
-
-def read_macros(path):
-    if not os.path.exists(path):
-        return {}
-    out = {}
-    with open(path, encoding="utf-8") as f:
-        for line in f:
-            m = re.match(r"\\newcommand\{\\(\w+)\}\{(.*)\}\s*$", line)
-            if m:
-                out[m.group(1)] = m.group(2)
-    return out
 
 
 # ------------------------------------------------------------- environment
@@ -179,12 +164,11 @@ def run_dss(log_path):
 
 
 def fold_dss_without_regenerating():
-    """Put this run's DSS figures into numbers.json / numbers.tex in place.
+    """Put this run's DSS figures into numbers.json in place.
 
     Re-running run_all.py would regenerate every artifact with fresh keys and
     leave the DSS figures describing files that no longer exist.
     """
-    import run_all  # noqa: E402  (imported late: it rewraps stdout)
     with open(NUMBERS_JSON, encoding="utf-8") as f:
         res = json.load(f)
     with open(DSS_JSON, encoding="utf-8") as f:
@@ -192,7 +176,6 @@ def fold_dss_without_regenerating():
     res["meta"]["dss_on_artifacts_of"] = res["meta"]["generated"]
     with open(NUMBERS_JSON, "w", encoding="utf-8") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
-    run_all.write_numbers_tex(run_all.macros(res), NUMBERS_TEX)
 
 
 # ----------------------------------------------------- independent re-reads
@@ -238,7 +221,7 @@ def find(rows, key, prefix):
     return hits[0] if len(hits) == 1 else None
 
 
-def answer_questions(d, env, cmp_ok, cmp_text, dss_same_run, macro_changes):
+def answer_questions(d, env, cmp_ok, cmp_text, dss_same_run):
     Q = []
 
     def q(num, question, verdict, evidence, where):
@@ -393,7 +376,7 @@ def answer_questions(d, env, cmp_ok, cmp_text, dss_same_run, macro_changes):
     return Q
 
 
-def write_report(path, Q, d, env, macro_changes, compare_output, dss_same_run):
+def write_report(path, Q, d, env, compare_output, dss_same_run):
     fails = [x for x in Q if x["v"] == FAIL]
     lines = [
         "# Reproduction report",
@@ -414,17 +397,7 @@ def write_report(path, Q, d, env, macro_changes, compare_output, dss_same_run):
         "PASS: the paper's claim holds in this run. FAIL: it does not; the paper may state something this run "
         "does not show. NOTE: a scope or provenance fact a reader should know.",
         "",
-        "## Printed values that differ from the reference build of the paper",
-        "",
     ]
-    if macro_changes:
-        lines.append("These macros print differently if the paper is recompiled from this run. "
-                     "Timings and hashes are expected to move; anything else deserves a look.")
-        lines.append("")
-        for k, a, b in macro_changes:
-            lines.append(f"- `\\{k}`: `{a}` -> `{b}`")
-    else:
-        lines.append("None.")
     lines += [
         "",
         "## What this reproduction does not establish",
@@ -454,15 +427,14 @@ def main():
     ap.add_argument("--with-dss", action="store_true",
                     help="re-validate this run's artifacts with DSS 6.5 (JDK 17 required)")
     ap.add_argument("--reference", default=REFERENCE_JSON,
-                    help="numbers.json the paper was built from")
+                    help="numbers.json from the reference experimental run")
     ap.add_argument("--freeze-reference", action="store_true",
-                    help="copy the current results/numbers.json and numbers.tex to results/reference/ and exit")
+                    help="copy the current results/numbers.json to results/reference/ and exit")
     args = ap.parse_args()
 
     if args.freeze_reference:
         os.makedirs(REFERENCE_DIR, exist_ok=True)
         shutil.copyfile(NUMBERS_JSON, REFERENCE_JSON)
-        shutil.copyfile(NUMBERS_TEX, REFERENCE_TEX)
         with open(REFERENCE_JSON, encoding="utf-8") as f:
             gen = json.load(f)["meta"]["generated"]
         say(f"reference frozen from run {gen} -> {os.path.relpath(REFERENCE_DIR, ROOT)}")
@@ -470,7 +442,7 @@ def main():
 
     if not os.path.exists(args.reference):
         say(f"no reference at {args.reference}; run `python reproduce.py --freeze-reference` "
-            "on the build the paper was compiled from")
+            "on the reference experimental run")
         return 2
 
     stamp = time.strftime("%Y%m%d_%H%M%S")
@@ -505,7 +477,7 @@ def main():
             return 1
         fold_dss_without_regenerating()
         dss_same_run = True
-        say("  DSS figures folded into numbers.json / numbers.tex without regenerating artifacts")
+        say("  DSS figures folded into numbers.json without regenerating artifacts")
 
     banner("4/5  compare against the reference build")
     import compare_runs
@@ -523,24 +495,13 @@ def main():
                 + ("none differ; size drift within tolerance." if cmp_ok else
                    "DIFFERENCES FOUND -- see compare.txt."))
 
-    ref_m, new_m = read_macros(REFERENCE_TEX), read_macros(NUMBERS_TEX)
-    macro_changes = [(k, ref_m.get(k), new_m.get(k)) for k in sorted(set(ref_m) | set(new_m))
-                     if ref_m.get(k) != new_m.get(k)]
-    if any("??" in str(v) for v in new_m.values()):
-        cmp_ok = False
-        cmp_text += " A macro renders as ?? (missing figure)."
-
-    subprocess.run([sys.executable, os.path.join(ROOT, "gen_revision_table.py")], cwd=ROOT,
-                   stdout=subprocess.DEVNULL)
-
     banner("5/5  reviewer questions")
-    Q = answer_questions(d, env, cmp_ok, cmp_text, dss_same_run, macro_changes)
+    Q = answer_questions(d, env, cmp_ok, cmp_text, dss_same_run)
     report = os.path.join(out, "REVIEWER_REPORT.md")
-    write_report(report, Q, d, env, macro_changes, compare_output, dss_same_run)
+    write_report(report, Q, d, env, compare_output, dss_same_run)
     with open(os.path.join(out, "compare.txt"), "w", encoding="utf-8") as f:
         f.write(compare_output)
     shutil.copyfile(NUMBERS_JSON, os.path.join(out, "numbers.json"))
-    shutil.copyfile(NUMBERS_TEX, os.path.join(out, "numbers.tex"))
 
     for x in Q:
         say(f"  [{x['v']:4s}] {x['n']:3s} {x['q']}")
