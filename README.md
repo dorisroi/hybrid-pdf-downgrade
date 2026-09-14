@@ -72,8 +72,6 @@ src/experiments/         the results the paper rests on  (genuine ML-DSA-44)
   e5_cost.py             does the mitigation cost anything? interleaved + bootstrap
 src/controls/            ablations   (NOT post-quantum; see the warning in-file)
   c1_algorithm_invariance.py
-paper/                   paper_update.tex (current), paper.tex, paper_vi.tex
-  generated/numbers.tex  GENERATED -- do not edit
 results/
   numbers.json           full record of the last run
   artifacts/             every PDF, key and certificate the run produced
