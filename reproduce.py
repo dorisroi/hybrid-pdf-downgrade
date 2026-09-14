@@ -299,9 +299,10 @@ def answer_questions(d, env, cmp_ok, cmp_text, dss_same_run):
     ok = e5.get("interleaved") and lo <= 0 <= hi and e5["size_delta_bytes"] <= 0
     q("R6", "Does the mitigation cost anything, and is the timing comparison sound?",
       PASS if ok else FAIL,
-      f"{e5['reps']} interleaved repetitions per order (batches would charge machine-load drift to one order); "
-      f"95% bootstrap CI on the median signing-time difference {lo:+.1f} to {hi:+.1f} ms straddles zero; "
-      f"order B output {abs(e5['size_delta_bytes']):.0f} B smaller.", "§V")
+      f"{e5['reps']} fixed A-then-B blocks; no randomisation or counterbalancing, so order bias remains. "
+      f"95% independent-bootstrap CI for median(B)-median(A): [{lo:+.1f}, {hi:+.1f}] ms. "
+      "An interval containing zero is not an equivalence test. "
+      f"Observed size delta B-A: {e5['size_delta_bytes']:+.0f} B (run-specific).", "§V")
 
     # R7 -- order B is not sufficient
     e3 = d["E3"]

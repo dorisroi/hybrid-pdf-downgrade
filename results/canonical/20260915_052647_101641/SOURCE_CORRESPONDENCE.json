@@ -1,0 +1,97 @@
+{
+  "src/audit/__init__.py": {
+    "public_lf_sha256": "16ac07f63ea0a1f7dc6bd6b8ee5175b7f914b334577ff8f4a55e09a040bb22a0",
+    "acquisition_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ast_equal": true
+  },
+  "src/audit/audit_crypto.py": {
+    "public_lf_sha256": "959ae23215ee0d721fd8391cd30ca3754128d9ddd606fbf967a8d33ca904af9c",
+    "acquisition_sha256": "959ae23215ee0d721fd8391cd30ca3754128d9ddd606fbf967a8d33ca904af9c",
+    "ast_equal": true
+  },
+  "src/controls/__init__.py": {
+    "public_lf_sha256": "c9819e65a66c794c851da586fa3a97e6087d5b3dbfc3c9faf4e1f345bc22f800",
+    "acquisition_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ast_equal": true
+  },
+  "src/controls/c1_algorithm_invariance.py": {
+    "public_lf_sha256": "698fd61c452eb208aea9d4330f1103785dfa599cdd437bc1e1526c2e111bfedd",
+    "acquisition_sha256": "698fd61c452eb208aea9d4330f1103785dfa599cdd437bc1e1526c2e111bfedd",
+    "ast_equal": true
+  },
+  "src/experiments/__init__.py": {
+    "public_lf_sha256": "c95cc196e35bf9a4068b29437dfd7549ee25ab7d9c659049e6dda8bde603b6ae",
+    "acquisition_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ast_equal": true
+  },
+  "src/experiments/e1_plain_downgrade.py": {
+    "public_lf_sha256": "17ef9e164f6646b56c9a364fbfd74adea6641fdd6c11eebb2df800ad5d349799",
+    "acquisition_sha256": "17ef9e164f6646b56c9a364fbfd74adea6641fdd6c11eebb2df800ad5d349799",
+    "ast_equal": true
+  },
+  "src/experiments/e2_lta_downgrade.py": {
+    "public_lf_sha256": "06bb6323abce5c9cd9fa1bb479da91d0a62d5b1cb104411c0b3d43a1e6a08b6c",
+    "acquisition_sha256": "06bb6323abce5c9cd9fa1bb479da91d0a62d5b1cb104411c0b3d43a1e6a08b6c",
+    "ast_equal": true
+  },
+  "src/experiments/e3_t2_forgery.py": {
+    "public_lf_sha256": "b0155068e3fb80e4d74f529fa65bd72ea0b55a08e8f69042bcbf597d9521f944",
+    "acquisition_sha256": "b0155068e3fb80e4d74f529fa65bd72ea0b55a08e8f69042bcbf597d9521f944",
+    "ast_equal": true
+  },
+  "src/experiments/e4_verifier_rule.py": {
+    "public_lf_sha256": "79bc3b6caf174fdfb54a640f996aee49e839f1df2983abc0222bc230150c4fbf",
+    "acquisition_sha256": "79bc3b6caf174fdfb54a640f996aee49e839f1df2983abc0222bc230150c4fbf",
+    "ast_equal": true
+  },
+  "src/experiments/e5_cost.py": {
+    "public_lf_sha256": "357086042c2f2618eae30c7f5907cb828e6220616bc4656a24a4e28040da895d",
+    "acquisition_sha256": "357086042c2f2618eae30c7f5907cb828e6220616bc4656a24a4e28040da895d",
+    "ast_equal": true
+  },
+  "src/experiments/e6_formfill_probe.py": {
+    "public_lf_sha256": "ca49bdca0b9642cdfe41a042067bb2453703daab4d6861d4d4412a2076af2ec4",
+    "acquisition_sha256": "ca49bdca0b9642cdfe41a042067bb2453703daab4d6861d4d4412a2076af2ec4",
+    "ast_equal": true
+  },
+  "src/experiments/e7_refined_rule.py": {
+    "public_lf_sha256": "be198c9265e51fe6662e6a0eae5922c3ff14e57e4e236876bde2b359cd2f5fb0",
+    "acquisition_sha256": "be198c9265e51fe6662e6a0eae5922c3ff14e57e4e236876bde2b359cd2f5fb0",
+    "ast_equal": true
+  },
+  "src/experiments/e8_value_rule.py": {
+    "public_lf_sha256": "b4b2b6bb3ac5043632edf9a9ed9d24a8ebeba82bb79973b9c458664a58634ddf",
+    "acquisition_sha256": "b4b2b6bb3ac5043632edf9a9ed9d24a8ebeba82bb79973b9c458664a58634ddf",
+    "ast_equal": true
+  },
+  "src/experiments/e9_rule_bypass_probe.py": {
+    "public_lf_sha256": "d5dad5f892cf8936fac8fbbb2a1cf62ec7857880c5849f68c6bd1d43a2e09d50",
+    "acquisition_sha256": "d5dad5f892cf8936fac8fbbb2a1cf62ec7857880c5849f68c6bd1d43a2e09d50",
+    "ast_equal": true
+  },
+  "src/hybridpdf/__init__.py": {
+    "public_lf_sha256": "1aec757321d03784a5c3efac120b0d0cbe24971ae9f61fa5e9bd7c3c1a03da69",
+    "acquisition_sha256": "1aec757321d03784a5c3efac120b0d0cbe24971ae9f61fa5e9bd7c3c1a03da69",
+    "ast_equal": true
+  },
+  "src/hybridpdf/pdfdoc.py": {
+    "public_lf_sha256": "fb2931788905a7c0901787f58888086fcfba7748cc40f336bed900dcd26da671",
+    "acquisition_sha256": "fb2931788905a7c0901787f58888086fcfba7748cc40f336bed900dcd26da671",
+    "ast_equal": true
+  },
+  "src/hybridpdf/pki.py": {
+    "public_lf_sha256": "78c14b91db02d994fee00c8cbecd56ac55721ca2d72a83c81ec8bc1fa6fe073b",
+    "acquisition_sha256": "78c14b91db02d994fee00c8cbecd56ac55721ca2d72a83c81ec8bc1fa6fe073b",
+    "ast_equal": true
+  },
+  "src/hybridpdf/revisions.py": {
+    "public_lf_sha256": "cd5b883839523746b40bf252b7fa65c1cddbfbb8781891a20467d15732abd463",
+    "acquisition_sha256": "cd5b883839523746b40bf252b7fa65c1cddbfbb8781891a20467d15732abd463",
+    "ast_equal": true
+  },
+  "src/hybridpdf/verify.py": {
+    "public_lf_sha256": "f3734d6b324264aea57a4c3ed79543c2aa3adff5ab93ad31b894fa801b1d50c5",
+    "acquisition_sha256": "f3734d6b324264aea57a4c3ed79543c2aa3adff5ab93ad31b894fa801b1d50c5",
+    "ast_equal": true
+  }
+}

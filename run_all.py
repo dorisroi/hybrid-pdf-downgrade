@@ -68,11 +68,8 @@ def main():
     }
     # pyHanko 0.37 has no __version__ attribute; the installed distribution
     # metadata is the reliable source.
-    try:
-        from importlib.metadata import version
-        res["meta"]["pyhanko"] = version("pyHanko")
-    except Exception:
-        res["meta"]["pyhanko"] = "unknown"
+    from importlib.metadata import version
+    res["meta"]["pyhanko"] = version("pyHanko")
 
     jpath = paths.result("numbers.json")
     with open(jpath, "w", encoding="utf-8") as f:

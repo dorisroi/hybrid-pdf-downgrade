@@ -1,0 +1,451 @@
+
+##########################################################################
+#  Reproducing every experimental figure in the paper
+##########################################################################
+
+==============================================================================
+AUDIT — is the post-quantum layer genuinely post-quantum?
+==============================================================================
+  [PASS] A1 PQ certificate public key                   MLDSA44PublicKey
+  [PASS] A1b classical certificate public key           ECPublicKey
+  [PASS] A2 PQ CMS signature algorithm OID              2.16.840.1.101.3.4.3.17 (mldsa44)
+  [PASS] A2b classical CMS signature algorithm OID      1.2.840.10045.4.3.2 (sha256_ecdsa)
+  [PASS] A3 PQ signature length = 2420 B                2420 B
+        (classical signature is 71 B, DER-variable)
+  [PASS] A0 intact PQ signature verifies                intact=True valid=True
+  [PASS] A4 corrupt PQ signature -> PQ FAILS            byte@18678: intact=True valid=False
+  [PASS] A4b classical layer unaffected by that corruption intact=True
+  [PASS] A5 corrupt signed content -> PQ FAILS          byte@983: intact=False
+  [PASS] A5b corrupt signed content -> classical FAILS too intact=False
+  [PASS] A6 control's RoleSimPQ is NOT ML-DSA           1.2.840.10045.4.3.2 (sha256_ecdsa)
+
+------------------------------------------------------------------------------
+  11/11 checks passed — the post-quantum layer is genuine and verified
+
+==========================================================================
+E1  plain hybrid — ECDSA P-256 + ML-DSA-44
+==========================================================================
+
+  order A (conventional): classical inner, PQ outer
+    signed first (prefix, survives): ClassicalLayer  ECDSA P-256
+    signed last  (suffix, removed) : PQLayer         ML-DSA-44
+    hybrid 29596 B, inner 6638 B, discarded 22958 B
+    3 revision boundaries -> 2 candidate cuts
+      cut0 @  1458 -> nothing valid
+      cut1 @  6638 -> ['ClassicalLayer']  <-- byte-identical to the inner document
+    cuts yielding a valid signed document : 1
+    cuts yielding a CLASSICAL-ONLY document: 1
+
+  order B (proposed): PQ inner, classical outer
+    signed first (prefix, survives): PQLayer         ML-DSA-44
+    signed last  (suffix, removed) : ClassicalLayer  ECDSA P-256
+    hybrid 28804 B, inner 23603 B, discarded 5201 B
+    3 revision boundaries -> 2 candidate cuts
+      cut0 @  1458 -> nothing valid
+      cut1 @ 23603 -> ['PQLayer']  <-- byte-identical to the inner document
+    cuts yielding a valid signed document : 1
+    cuts yielding a CLASSICAL-ONLY document: 0
+
+  >>> adversary's goal reachable: order A = 1, order B = 0
+
+==========================================================================
+E2  PAdES-B-LTA under a test PKI — ECDSA P-256 + ML-DSA-44, TSA RSA 2048
+==========================================================================
+
+  order A (conventional): classical inner, PQ outer
+    hybrid 64133 B, archived-inner 27850 B, discarded 36283 B
+    intact document:
+      ClassicalLayer   intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+      DocTimeStamp     intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+      PQLayer          intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+      DocTimeStamp     intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+    7 revision boundaries -> 6 candidate cuts
+      cut0 @  1526 -> nothing valid (+0 ts)
+      cut1 @ 15092 -> ['ClassicalLayer'] (+0 ts)
+      cut2 @ 25969 -> ['ClassicalLayer'] (+1 ts)  <-- timestamp still covers ENTIRE_FILE
+      cut3 @ 27850 -> ['ClassicalLayer'] (+1 ts)  <-- byte-identical to the archived inner document
+      cut4 @ 52228 -> ['ClassicalLayer', 'PQLayer'] (+1 ts)
+      cut5 @ 62147 -> ['ClassicalLayer', 'PQLayer'] (+2 ts)
+    cuts yielding a valid signed document  : 5
+    cuts yielding a CLASSICAL-ONLY document: 3
+
+  order B (proposed): PQ inner, classical outer
+    hybrid 61582 B, archived-inner 37302 B, discarded 24280 B
+    intact document:
+      PQLayer          intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+      DocTimeStamp     intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+      ClassicalLayer   intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+      DocTimeStamp     intact=True valid=True trusted=True coverage=ENTIRE_REVISION
+    7 revision boundaries -> 6 candidate cuts
+      cut0 @  1526 -> nothing valid (+0 ts)
+      cut1 @ 25082 -> ['PQLayer'] (+0 ts)
+      cut2 @ 36420 -> ['PQLayer'] (+1 ts)
+      cut3 @ 37302 -> ['PQLayer'] (+1 ts)  <-- byte-identical to the archived inner document
+      cut4 @ 50914 -> ['PQLayer', 'ClassicalLayer'] (+1 ts)
+      cut5 @ 59596 -> ['PQLayer', 'ClassicalLayer'] (+2 ts)
+    cuts yielding a valid signed document  : 5
+    cuts yielding a CLASSICAL-ONLY document: 0
+
+  >>> adversary's goal reachable at B-LTA: order A = 3, order B = 0
+
+==========================================================================
+E3  t2 append-forgery — adversary holds the ECDSA P-256 key, never the ML-DSA-44 key
+==========================================================================
+  honest content: AMOUNT PAYABLE: 1,000 USD
+  forged content: AMOUNT PAYABLE: 100,000 USD
+
+  honest hybrid, order A
+    field              intact  coverage           mod-level
+    ClassicalLayer     True    ENTIRE_REVISION    FORM_FILLING
+    PQLayer            True    ENTIRE_FILE        NONE
+
+  honest hybrid, order B
+    field              intact  coverage           mod-level
+    PQLayer            True    ENTIRE_REVISION    FORM_FILLING
+    ClassicalLayer     True    ENTIRE_FILE        NONE
+
+  order B: cuts reaching a classical-only document = 0  (the PQ layer sits in the prefix)
+      cut0 @  1458 -> nothing valid
+      cut1 @ 23603 -> ['PQLayer']
+
+  S1_orderA_truncate_then_forge
+    field              intact  coverage           mod-level
+    ClassicalLayer     True    ENTIRE_REVISION    OTHER
+    ForgedClassical    True    ENTIRE_FILE        NONE
+
+  S2_orderB_append_and_forge
+    field              intact  coverage           mod-level
+    PQLayer            True    ENTIRE_REVISION    OTHER
+    ClassicalLayer     True    ENTIRE_REVISION    OTHER
+    ForgedClassical    True    ENTIRE_FILE        NONE
+
+  S3_either_order_forge_from_scratch
+    field              intact  coverage           mod-level
+    ForgedClassical    True    ENTIRE_FILE        NONE
+
+--------------------------------------------------------------------------
+  post-quantum evidence after the forgery
+--------------------------------------------------------------------------
+  file                               PQ layer   mod-level      covers rendered
+  honest, order B                    intact     FORM_FILLING   yes
+  S1_orderA_truncate_then_forge      ABSENT     None           -
+  S2_orderB_append_and_forge         intact     OTHER          no
+  S3_either_order_forge_from_scratch ABSENT     None           -
+
+  >>> honest and forged order-B files report the SAME coverage (ENTIRE_REVISION).
+      Only the modification level separates them: FORM_FILLING vs OTHER.
+
+==============================================================================
+E4  the proposed verifier rule, implemented and measured
+==============================================================================
+  benign modification levels: FORM_FILLING, LTA_UPDATES, NONE
+  4 legitimate documents, 6 attacks
+
+  scenario                                     truth      naive    proposed 
+  -------------------------------------------- ---------- -------- ---------
+  plain order B, honest                        legitimate accept   accept   
+  plain order B, t2 append-forgery             ATTACK     accept   reject   
+  plain order A, honest                        legitimate accept   accept   
+  plain order A, truncation-downgraded         ATTACK     accept   reject   
+  plain order A, downgraded then forged        ATTACK     accept   reject   
+  fabricated from scratch, classical only      ATTACK     accept   reject   
+  B-LTA order B, honest (timestamps after PQ)  legitimate accept   accept   
+  B-LTA order B, t2 append-forgery             ATTACK     accept   reject   
+  B-LTA order A, honest                        legitimate accept   accept   
+  B-LTA order A, truncation-downgraded         ATTACK     accept   reject   
+
+                                    naive   proposed
+  attacks rejected                      0          6
+  attacks MISSED                        6          0
+  honest accepted                       4          4
+  honest rejected (FP)                  0          0
+  detection rate                       0%       100%
+  false-positive rate                  0%         0%
+  accuracy                            40%       100%
+
+  >>> the naive rule misses 6 of 6 attacks; the proposed rule misses 0, with 0 false positives on archival documents.
+
+==============================================================================
+E5  cost of the mitigation — 40 interleaved repetitions per order
+==============================================================================
+                                     median        IQR        min        max
+  signing time, ms   order A          183.4       47.9      144.1      414.9
+  signing time, ms   order B          182.6       45.7      146.5      264.2
+
+  hybrid size, B     order A          29600          0      29596      29602
+  hybrid size, B     order B          28808          2      28804      28810
+
+  order B minus order A : -0.9 ms (95% bootstrap interval -15.0 to +11.0 ms)
+  >>> the interval straddles zero: no signing-cost difference is
+      demonstrated. The two orders perform the same two operations;
+      only their sequence changes.
+  size difference       : -792 B (order B is smaller)
+
+==========================================================================
+C1  CONTROL — both layers ECDSA P-256; 'RoleSimPQ' is NOT post-quantum
+==========================================================================
+
+  order A: classical inner, role-sim PQ outer
+    hybrid 11986 B, inner 6648 B, 3 boundaries
+      cut0 @  1458 -> nothing valid
+      cut1 @  6648 -> ['ClassicalLayer']
+    cuts yielding a CLASSICAL-ONLY document: 1
+
+  order B: role-sim PQ inner, classical outer
+    hybrid 11980 B, inner 6769 B, 3 boundaries
+      cut0 @  1458 -> nothing valid
+      cut1 @  6769 -> ['RoleSimPQ']
+    cuts yielding a CLASSICAL-ONLY document: 0
+
+  >>> order A = 1, order B = 0 — same as E1, with a different algorithm
+
+==================================================================================
+E6  can a t2 adversary change what the page shows and stay benign?
+==================================================================================
+  variant                                      level            rule
+  -------------------------------------------- ---------------- ----------
+  V0 honest order-B form document              FORM_FILLING     ACCEPTS
+  V1 fill existing field                       FORM_FILLING     ACCEPTS
+  V2 fill existing field + NeedAppearances     FORM_FILLING     ACCEPTS
+  V0b honest order-B plain document            FORM_FILLING     ACCEPTS
+  V3 create field then fill                    OTHER            rejects
+  V4 /Contents override (E4's attack)          OTHER            rejects
+
+----------------------------------------------------------------------------------
+  RESULT: the rule is DEFEATED by V1, V2
+  The page renders a forged amount while the post-quantum
+  signature sits inside the benign set. Section VI's R2 must be
+  restated: 'benign modification level' is weaker than 'no
+  revision altered page content', and E4's 0-missed figure is
+  scoped to /Contents overrides only.
+----------------------------------------------------------------------------------
+
+
+============================================================================================
+E7  refined rule -- accept FORM_FILLING only for signature fields
+============================================================================================
+  DiffResult types seen: DiffResult, SuspiciousModification
+  !! no changed-field set on _e7_newfield.pdf; available attributes: ['add_note', 'args', 'with_traceback']
+
+  case                                         level          changed fields               cur  ref
+  -------------------------------------------- -------------- ---------------------------- ---  ---
+  form order-B, honest                         FORM_FILLING   ClassicalLayer, amount       ACC  rej
+  form order-B, t2 field-fill forgery          FORM_FILLING   ClassicalLayer, ForgedClassi ACC  rej
+  form order-B, field-fill + NeedAppearances   FORM_FILLING   ClassicalLayer, ForgedClassi ACC  rej
+  plain order-B, honest                        FORM_FILLING   ClassicalLayer               ACC  ACC
+  plain order-B, t2 field-creation forgery     OTHER          -                            rej  rej
+  plain order-B, t2 /Contents override         OTHER          -                            rej  rej
+  plain order-A, honest                        NONE                                        ACC  ACC
+
+--------------------------------------------------------------------------------------------
+  corpus: 4 attacks, 3 legitimate documents
+  rule                       attacks missed   honest rejected   undecidable
+  current (Section VI)       2                0                 0
+  refined (R2-prime)         0                1                 0
+
+  current rule accepts an attack: form order-B, t2 field-fill forgery
+      level FORM_FILLING is benign
+  current rule accepts an attack: form order-B, field-fill + NeedAppearances
+      level FORM_FILLING is benign
+  refined rule rejects an honest document: form order-B, honest
+      R2' fails: non-signature field(s) changed after the post-quantum signature: amount
+
+--------------------------------------------------------------------------------------------
+  RESULT: R2' does not cleanly separate the corpus. The numbers
+  above are the finding; do not tune the rule to improve them.
+--------------------------------------------------------------------------------------------
+
+
+==============================================================================================
+E8  rule over form field VALUES across the post-quantum covered revision
+==============================================================================================
+  case                                           level          truth       verdict
+  ---------------------------------------------- -------------- ----------- -------
+  form order-B, honest                           FORM_FILLING   legitimate  accept
+  form order-B, t2 field-fill forgery            FORM_FILLING   ATTACK      reject
+  form order-B, field-fill + NeedAppearances     FORM_FILLING   ATTACK      reject
+  plain order-B, honest                          FORM_FILLING   legitimate  accept
+  plain order-B, t2 field-creation forgery       OTHER          ATTACK      reject
+  plain order-B, t2 /Contents override           OTHER          ATTACK      reject
+  plain order-A, honest                          NONE           legitimate  accept
+
+----------------------------------------------------------------------------------------------
+  evidence
+----------------------------------------------------------------------------------------------
+  form order-B, honest
+      R2'' holds: 1 ordinary field(s) unchanged across the covered revision
+  form order-B, t2 field-fill forgery
+      R2'' fails: field value changed -- amount: '1,000 USD' -> '100,000 USD'
+  form order-B, field-fill + NeedAppearances
+      R2'' fails: field value changed -- amount: '1,000 USD' -> '100,000 USD'
+  plain order-B, honest
+      R2'' holds: 0 ordinary field(s) unchanged across the covered revision
+  plain order-B, t2 field-creation forgery
+      R2'' fails: level OTHER
+  plain order-B, t2 /Contents override
+      R2'' fails: level OTHER
+  plain order-A, honest
+      R2'' holds: level NONE, no form change at all
+
+----------------------------------------------------------------------------------------------
+  corpus: 4 attacks, 3 legitimate documents
+  attacks missed 0   honest rejected 0   undecided 0
+----------------------------------------------------------------------------------------------
+  RESULT: R2'' separates the corpus cleanly. The rule the paper
+  should state is over field values, not over a diff taxonomy;
+  E6 and E7 become the two natural formulations that fail, which
+  is why the working one has to be stated where it is.
+----------------------------------------------------------------------------------------------
+
+
+====================================================================================================
+E9  bypasses of the verifier rules: field-name spoofing, appearance-only forgery
+====================================================================================================
+  case                                                 truth   E4      E8      E8+R1(oid)  +AP check
+  ---------------------------------------------------- ------- ------- ------- ----------- ---------
+  honest plain order-B                                 legit   ACCEPT  ACCEPT  ACCEPT      ACCEPT   
+  honest form order-B                                  legit   ACCEPT  ACCEPT  ACCEPT      ACCEPT   
+  B1a spoof: scratch, ECDSA named PQLayer              ATTACK  ACCEPT  ACCEPT  reject      reject   
+  B1b spoof: truncate A, override, ECDSA named PQLayer ATTACK  ACCEPT  ACCEPT  reject      reject   
+  B2 appearance-only forgery (/V unchanged)            ATTACK  ACCEPT  ACCEPT  ACCEPT      reject   
+
+----------------------------------------------------------------------------------------------------
+  evidence
+----------------------------------------------------------------------------------------------------
+  honest plain order-B
+      signature algorithms : {'PQLayer': '2.16.840.1.101.3.4.3.17', 'ClassicalLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : FORM_FILLING
+      E8                   : R2'' holds: 0 ordinary field(s) unchanged across the covered revision
+      R1 by algorithm      : ML-DSA signature present in field 'PQLayer'
+      +AP check            : values and 0 appearance stream(s) unchanged
+  honest form order-B
+      signature algorithms : {'PQLayer': '2.16.840.1.101.3.4.3.17', 'ClassicalLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : FORM_FILLING
+      E8                   : R2'' holds: 1 ordinary field(s) unchanged across the covered revision
+      R1 by algorithm      : ML-DSA signature present in field 'PQLayer'
+      +AP check            : values and 1 appearance stream(s) unchanged
+  B1a spoof: scratch, ECDSA named PQLayer
+      signature algorithms : {'PQLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : NONE
+      E8                   : R2'' holds: level NONE, no form change at all
+      R1 by algorithm      : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+      +AP check            : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+  B1b spoof: truncate A, override, ECDSA named PQLayer
+      signature algorithms : {'ClassicalLayer': '1.2.840.10045.4.3.2', 'PQLayer': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : NONE
+      E8                   : R2'' holds: level NONE, no form change at all
+      R1 by algorithm      : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+      +AP check            : R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA
+  B2 appearance-only forgery (/V unchanged)
+      signature algorithms : {'PQLayer': '2.16.840.1.101.3.4.3.17', 'ClassicalLayer': '1.2.840.10045.4.3.2', 'ForgedClassical': '1.2.840.10045.4.3.2'}
+      PQLayer mod-level    : FORM_FILLING
+      /AP /N draws         : 100,000 USD
+      E8                   : R2'' holds: 1 ordinary field(s) unchanged across the covered revision
+      R1 by algorithm      : ML-DSA signature present in field 'PQLayer'
+      +AP check            : appearance stream changed after the PQ signature: amount
+
+
+  no results/dss_rule.json — run run_dss.ps1 for the DSS figures
+
+##########################################################################
+#  SUMMARY — these are the figures the paper will cite
+##########################################################################
+  \classicalAlgo                    ECDSA P-256
+  \pqAlgo                           ML-DSA-44
+  \tsaAlgo                          RSA 2048
+  \eOneHybridSize                   29{,}596
+  \eOneInnerSize                    6{,}638
+  \eOneDiscarded                    22{,}958
+  \eOneBoundaries                   3
+  \eOneCutPointsA                   2
+  \eOneValidCutsA                   1
+  \eOneClassicalOnlyA               1
+  \eOneCutPointsB                   2
+  \eOneValidCutsB                   1
+  \eOneClassicalOnlyB               0
+  \eOnePqOnlyB                      1
+  \eOneInnerSha                     79e59936aa2ff49f
+  \eOneOrderBCutOffset              23{,}603
+  \eTwoHybridSize                   64{,}133
+  \eTwoInnerSize                    27{,}850
+  \eTwoDiscarded                    36{,}283
+  \eTwoBoundaries                   7
+  \eTwoCutPointsA                   6
+  \eTwoValidCutsA                   5
+  \eTwoClassicalOnlyA               3
+  \eTwoCutPointsB                   6
+  \eTwoValidCutsB                   5
+  \eTwoClassicalOnlyB               0
+  \eTwoPqOnlyB                      3
+  \eTwoInnerSha                     bcaed12ca595d740
+  \eThreeHonestBCoverage            ENTIRE\_REVISION
+  \eThreeForgedBCoverage            ENTIRE\_REVISION
+  \eThreeHonestBModLevel            FORM\_FILLING
+  \eThreeForgedBModLevel            OTHER
+  \eThreeForgedAPresent             absent
+  \eThreeOrderBClassicalOnlyCuts    0
+  \eFourAttacks                     6
+  \eFourLegit                       4
+  \eFourNaiveMissed                 6
+  \eFourNaiveDetection              0\%
+  \eFourProposedMissed              0
+  \eFourProposedRejected            6
+  \eFourProposedDetection           100\%
+  \eFourProposedFP                  0
+  \eFourBenignLevels                FORM\_FILLING, LTA\_UPDATES, NONE
+  \eFiveReps                        40
+  \eFiveTimeA                       183
+  \eFiveTimeB                       183
+  \eFiveDelta                       -0.9
+  \eFiveDeltaLo                     -15.0
+  \eFiveDeltaHi                     +11.0
+  \eFiveSizeDelta                   792
+  \dssTotal                         ??
+  \dssAttacks                       ??
+  \dssLegit                         ??
+  \dssNaiveAccepted                 ??
+  \dssNaiveRejectedLegit            ??
+  \dssDecidable                     ??
+  \dssUndecidable                   ??
+  \dssRuleMissed                    ??
+  \dssRuleFP                        ??
+  \auditPassed                      11
+  \auditTotal                       11
+  \pqOid                            2.16.840.1.101.3.4.3.17
+  \pqSigLen                         2{,}420
+  \cOneClassicalOnlyA               1
+  \cOneClassicalOnlyB               0
+  \cOneOrderBCutOffset              6{,}769
+  \eOneDecisiveCut                  1
+  \eTwoDecisiveCut                  3
+  \eTwoDecisiveOffset               27{,}850
+  \sigCovOverride                   \xmark
+  \sigCovFill                       \xmark
+  \sigModOverride                   \cmark
+  \sigModFill                       \xmark
+  \sigFieldsOverride                \xmark
+  \sigFieldsFill                    \xmark
+  \sigValuesOverride                \cmark
+  \sigValuesFill                    \cmark
+  \sigCovAppearance                 \xmark
+  \sigModAppearance                 \xmark
+  \sigFieldsAppearance              \xmark
+  \sigValuesAppearance              \xmark
+  \eSixFillLevel                    FORM\_FILLING
+  \eSixFillAccepted                 accepted
+  \eSevenHonestChanged              ClassicalLayer, amount
+  \eSevenHonestRejected             1
+  \eEightCorpus                     7
+  \eEightAttacksMissed              0
+  \eEightHonestRejected             0
+  \eEightMovedField                 amount
+  \eEightMovedBefore                1,000 USD
+  \eEightMovedAfter                 100,000 USD
+  \eNineSpoofsCaught                2
+  \eNineSpoofsTotal                 2
+  \eNineHonestKept                  2
+  \eNineApRenders                   100,000 USD
+
+  full record -> results\numbers.json
+  LaTeX macros -> paper\generated\numbers.tex
+  elapsed 32.4s

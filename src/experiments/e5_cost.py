@@ -14,15 +14,17 @@ First, report the MEDIAN and the interquartile range, not a mean with a standard
 deviation. Signing time on a loaded desktop is heavy-tailed; a mean over a
 handful of runs measures the scheduler, not the construction.
 
-Second, INTERLEAVE the two orders rather than running one batch after the other.
-Machine load drifts over seconds, and a back-to-back layout charges that drift
-to whichever construction ran second.
+Second, interleave fixed A-then-B blocks rather than separate batches.
+This can reduce sensitivity to temporal drift but does not cancel it:
+the order is neither randomised nor counterbalanced, so order bias remains.
 
 Third, put an interval on the difference. A median difference quoted without
 one cannot be distinguished from sampling noise, and with an interquartile range
 of tens of milliseconds a difference of ten is exactly the case in doubt. We
-bootstrap the difference of medians and report a 95% interval; if it straddles
-zero, no cost difference has been demonstrated.
+bootstrap the difference of sample medians by resampling each order independently,
+not by resampling pairs. An interval containing zero does not establish
+equivalence. New runs retain individual observations and analysis metadata;
+historical aggregate-only records cannot recover those observations.
 """
 import os
 import random
@@ -35,6 +37,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from hybridpdf import paths, pki, pdfdoc
 
 CLASSICAL, PQ = "ClassicalLayer", "PQLayer"
+BOOTSTRAP_RESAMPLES = 10000
+BOOTSTRAP_SEED = 12345
 
 
 def _one(first, second, first_field, second_field, tag):
@@ -46,7 +50,7 @@ def _one(first, second, first_field, second_field, tag):
     return (time.perf_counter() - t0) * 1000.0, os.path.getsize(full)
 
 
-def _bootstrap_median_diff(xs, ys, iters=10000, seed=12345):
+def _bootstrap_median_diff(xs, ys, iters=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED):
     """95% interval for median(ys) - median(xs), by resampling with replacement."""
     rng = random.Random(seed)
     n, m = len(xs), len(ys)
@@ -72,7 +76,7 @@ def run(reps=40, verbose=True):
     classical = pki.selfsigned("_e5_c", "Classical Signer", "ec")
     pq = pki.selfsigned("_e5_q", "PQ Signer", "mldsa")
 
-    # interleaved, so drift in machine load is charged to both orders equally
+    # Fixed A then B; interleaving is not randomisation or counterbalancing.
     tA, sA, tB, sB = [], [], [], []
     for _ in range(reps):
         t, s = _one(classical, pq, CLASSICAL, PQ, "A")
@@ -93,6 +97,35 @@ def run(reps=40, verbose=True):
         "time_delta_ci95": [lo, hi],
         "time_difference_demonstrated": not (lo <= 0.0 <= hi),
         "size_delta_bytes": statistics.median(sB) - statistics.median(sA),
+        # Additive recording only: all legacy estimators above are unchanged.
+        # Sequence indexes preserve execution blocks, not a paired estimator.
+        "observations": [
+            {"block_index": i + 1, "execution_order": ["A", "B"],
+             "A": {"time_ms": ta, "size_bytes": sa},
+             "B": {"time_ms": tb, "size_bytes": sb}}
+            for i, (ta, sa, tb, sb) in enumerate(zip(tA, sA, tB, sB))
+        ],
+        "analysis": {
+            "estimator": "median(B.time_ms) - median(A.time_ms)",
+            "paired_analysis": False,
+            "execution_order": ["A", "B"],
+            "randomised": False,
+            "counterbalanced": False,
+            "bootstrap": {
+                "method": "independent resampling with replacement within each order",
+                "resamples": BOOTSTRAP_RESAMPLES,
+                "seed": BOOTSTRAP_SEED,
+                "rng": "random.Random",
+                "confidence_level": 0.95,
+                "interval": "percentile",
+                "sorted_zero_based_endpoint_indices": [
+                    int(0.025 * BOOTSTRAP_RESAMPLES),
+                    int(0.975 * BOOTSTRAP_RESAMPLES) - 1,
+                ],
+            },
+            "quartiles": "statistics.quantiles(n=4, method='exclusive')",
+            "timed_scope": "two pdfdoc.sign calls; excludes key generation and make_pdf",
+        },
     }
     if verbose:
         report(out)

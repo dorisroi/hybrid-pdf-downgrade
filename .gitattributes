@@ -1,0 +1,2 @@
+# Preserve canonical acquisition evidence byte-for-byte on every platform.
+results/canonical/** -text

@@ -1,0 +1,24 @@
+================================================================================
+compare_runs -- baseline vs new
+================================================================================
+  baseline generated: 2026-09-15 05:27:21
+  new      generated: 2026-09-15 05:28:20
+  invariants checked: 389
+
+--- INVARIANT DIFFERENCES (0) ----------------------------------------
+  none. The selected invariants agree; see metadata and drift checks below.
+
+--- EXPECTED DRIFT (8) -----------------------------------------------
+  C1.A.hybrid_size                       11986 ->     11976  (-10 B)
+  C1.A.inner_size                         6648 ->      6638  (-10 B)
+  C1.B.hybrid_size                       11980 ->     11970  (-10 B)
+  C1.B.inner_size                         6769 ->      6765  (-4 B)
+  E2.A.hybrid_size                       64133 ->     64137  (+4 B)
+  E2.A.inner_size                        27850 ->     27854  (+4 B)
+  E2.B.bytes_discarded                   24280 ->     24284  (+4 B)
+  E2.B.hybrid_size                       61582 ->     61586  (+4 B)
+
+================================================================================
+  RESULT: reproduced. Experimental JSON matches the reference checks.
+================================================================================
+

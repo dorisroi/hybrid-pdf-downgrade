@@ -1,0 +1,78 @@
+classpath: 285 jars
+==============================================================
+ DSS 6.5 -- can an independent validator apply the proposed rule?
+ directory: D:\NCKH\paper_POS\results\full_reruns\20260915_052647_101641\run1\dssval\..\results\artifacts
+==============================================================
+
+  --- _e4_B_2.pdf (28804 B)
+      PQLayer          signer=(unknown)          intact=false scope=PARTIAL  objMods=true  ext=3 formFill=2 annot=0 UNDEFINED=0
+      ClassicalLayer   signer=Classical Signer   intact=true  scope=FULL     objMods=false ext=0 formFill=0 annot=0 UNDEFINED=0
+
+  --- _e4_B_forged.pdf (34212 B)
+      PQLayer          signer=(unknown)          intact=false scope=PARTIAL  objMods=true  ext=3 formFill=4 annot=0 UNDEFINED=1
+      ClassicalLayer   signer=Classical Signer   intact=true  scope=PARTIAL  objMods=true  ext=0 formFill=2 annot=0 UNDEFINED=1
+      ForgedClassical  signer=Classical Signer   intact=true  scope=FULL     objMods=false ext=0 formFill=0 annot=0 UNDEFINED=0
+
+  --- _e4_A_2.pdf (29596 B)
+      ClassicalLayer   signer=Classical Signer   intact=true  scope=PARTIAL  objMods=true  ext=0 formFill=2 annot=0 UNDEFINED=0
+      PQLayer          signer=(unknown)          intact=false scope=FULL     objMods=false ext=0 formFill=0 annot=0 UNDEFINED=0
+
+  --- _e4_A_downgraded.pdf (6638 B)
+      ClassicalLayer   signer=Classical Signer   intact=true  scope=FULL     objMods=false ext=0 formFill=0 annot=0 UNDEFINED=0
+
+  --- _e4_A_forged.pdf (12031 B)
+      ClassicalLayer   signer=Classical Signer   intact=true  scope=PARTIAL  objMods=true  ext=0 formFill=2 annot=0 UNDEFINED=1
+      ForgedClassical  signer=Classical Signer   intact=true  scope=FULL     objMods=false ext=0 formFill=0 annot=0 UNDEFINED=0
+
+  --- _e4_scratch_forged.pdf (6644 B)
+      ForgedClassical  signer=Classical Signer   intact=true  scope=FULL     objMods=false ext=0 formFill=0 annot=0 UNDEFINED=0
+
+  --- _e4l_B_hybrid.pdf (61586 B)
+      ERROR: IllegalArgumentException: Unsupported algorithm: ML-DSA-44
+
+  --- _e4l_B_forged.pdf (70309 B)
+      ERROR: IllegalArgumentException: Unsupported algorithm: ML-DSA-44
+
+  --- _e4l_A_hybrid.pdf (64137 B)
+      ERROR: IllegalArgumentException: Unsupported algorithm: ML-DSA-44
+
+  --- _e4l_A_downgraded.pdf (27854 B)
+      ClassicalLayer   signer=Classical Signer   intact=true  scope=PARTIAL  objMods=true  ext=3 formFill=0 annot=0 UNDEFINED=0
+
+==============================================================
+ SUMMARY
+==============================================================
+  plain order B, honest                      LEGIT   naive=reject  rule=UNDECIDABLE
+  plain order B, t2 append-forgery           ATTACK  naive=reject  rule=REJECT
+  plain order A, honest                      LEGIT   naive=reject  rule=UNDECIDABLE
+  plain order A, truncation-downgraded       ATTACK  naive=accept  rule=REJECT
+  plain order A, downgraded then forged      ATTACK  naive=accept  rule=REJECT
+  fabricated from scratch                    ATTACK  naive=accept  rule=REJECT
+  B-LTA order B, honest                      LEGIT   naive=reject  rule=UNDECIDABLE
+  B-LTA order B, t2 append-forgery           ATTACK  naive=reject  rule=UNDECIDABLE
+  B-LTA order A, honest                      LEGIT   naive=reject  rule=UNDECIDABLE
+  B-LTA order A, truncation-downgraded       ATTACK  naive=accept  rule=REJECT
+
+  6 attacks, 4 legitimate documents
+
+  Today's rule (every signature intact), as DSS applies it:
+    attacks accepted        : 4 of 6
+    legitimate REJECTED     : 4 of 4
+    -- DSS marks the unparseable ML-DSA layer not-intact, so it
+       rejects the protected documents and accepts the attacked
+       ones. This is the Section V-A inversion, independently.
+
+  Proposed rule, restricted to what DSS can actually decide:
+    decidable files         : 5 of 10
+    attacks missed          : 0
+    false positives         : 0
+    UNDECIDABLE (ML-DSA unparseable by DSS 6.5): 5
+
+  UNDEFINED > 0 is DSS's equivalent of pyHanko's OTHER:
+  object modifications it cannot classify as extension,
+  signature/form fill, or annotation change.
+
+  wrote D:\NCKH\paper_POS\results\full_reruns\20260915_052647_101641\run1\dssval\..\results\dss_rule.json
+
+report -> results\dss_rule_report.txt
+figures -> results\dss_rule.json   (re-run run_all.py to fold into the paper)

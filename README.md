@@ -29,17 +29,36 @@ docker build -t hybridpdf-repro .
 docker run --rm -v "$PWD/results/reproduce:/work/results/reproduce" hybridpdf-repro
 ```
 
-The individual stages are:
+`python run_all.py` runs the Python experiments alone. For a same-run DSS
+cross-check, use `python reproduce.py --with-dss`: it validates the PDFs and
+folds the DSS output in without signing the PDFs again. Do not use the cycle
+`run_all -> run_dss -> run_all` as same-run evidence: the final invocation
+creates new artifacts while retaining the preceding DSS measurements.
+
+## Canonical measurement record
+
+The current canonical record is
+[`results/canonical/20260915_052647_101641/run2/numbers.json`](results/canonical/20260915_052647_101641/run2/numbers.json).
+`run1` in the same directory is the independent replication. Run2 was selected
+before the validation pair completed, not according to its timing result.
+See [the evidence index](results/canonical/20260915_052647_101641/README.md)
+for acquisition provenance, original logs, artifact hashes and limitations.
+The older `results/numbers.json` and `results/reference/` are retained as
+historical records; they are not the source of the current timing values.
 
 ```powershell
-python run_all.py
-.\run_dss.ps1
-python run_all.py
+python verify_canonical.py
+python -m unittest discover -s tests -v
+python reproduce.py --with-dss --reference results/canonical/20260915_052647_101641/run2/numbers.json
 ```
 
-The first stage generates the experimental artifacts. DSS provides an
-independent validation pass; the final stage incorporates the available DSS
-results. Use `reproduce.py --with-dss` for the coordinated workflow.
+The comparator checks 389 selected invariants, including E6-E9 and the
+installed pyHanko version. Missing or `unknown` versions fail even if equal
+on both sides. Timing samples and bootstrap metadata are recorded under
+`E5.observations` and `E5.analysis`. The estimator is median(B)-median(A),
+with independent within-order bootstrap resampling, not paired resampling.
+A always precedes B; there is no randomisation or counterbalancing.
+An interval containing zero does not establish equivalence.
 
 ## Experiments and scope
 

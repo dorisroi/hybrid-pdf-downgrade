@@ -188,6 +188,18 @@ def _fmt(v):
     return s if len(s) <= 96 else s[:93] + "..."
 
 
+def version_record_errors(base, new):
+    """Missing/unknown versions cannot establish environment reproducibility."""
+    import re
+    errors = []
+    for label, data in (("baseline", base), ("new", new)):
+        value = (data.get("meta") or {}).get("pyhanko")
+        if not isinstance(value, str) or not re.fullmatch(
+                r"[0-9]+\.[0-9]+(?:\.[0-9]+)?(?:[a-zA-Z0-9.+-]*)", value):
+            errors.append(f"{label}: invalid or missing meta.pyhanko={value!r}")
+    return errors
+
+
 def compare(base, new):
     inv_b, inv_n = invariants(base), invariants(new)
     dr_b, dr_n = drifters(base), drifters(new)
@@ -218,7 +230,7 @@ def compare(base, new):
 
     print(f"\n--- INVARIANT DIFFERENCES ({len(regressions)}) " + "-" * 40)
     if not regressions:
-        print("  none. Every claim the paper makes reproduced exactly.")
+        print("  none. The selected invariants agree; see metadata and drift checks below.")
     for k, a, b in regressions:
         print(f"  {k}")
         print(f"      baseline {_fmt(a)}")
@@ -243,12 +255,18 @@ def compare(base, new):
             print(f"  {k:34s} {a:>9} -> {b:>9}  ({d:+d} B)")
         print("  A move this large is structural, not signature encoding.")
 
-    ok = not regressions and not excessive and not missing and not added
+    version_errors = version_record_errors(base, new)
+    if version_errors:
+        print("\n--- INVALID ENVIRONMENT METADATA ---")
+        for error in version_errors:
+            print("  " + error)
+    ok = (not regressions and not excessive and not missing and not added
+          and not version_errors)
     print("\n" + "=" * 80)
     if ok:
         print("  RESULT: reproduced. Experimental JSON matches the reference checks.")
     else:
-        print("  RESULT: NOT reproduced. Do not recompile the paper until the")
+        print("  RESULT: NOT reproduced. Do not treat these results as reproduced until the")
         print("  differences above are explained -- the text may assert something")
         print("  this run does not show.")
     print("=" * 80 + "\n")
