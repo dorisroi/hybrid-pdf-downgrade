@@ -14,7 +14,7 @@ spec.loader.exec_module(cmp)
 
 class BookkeepingTest(unittest.TestCase):
     def setUp(self):
-        self.data = json.loads((ROOT/'results/canonical/20260915_052647_101641/run2/numbers.json').read_text())
+        self.data = json.loads((ROOT/'results/canonical/20260915_162034_799680/run1/numbers.json').read_text())
 
     def compare(self, a, b):
         with contextlib.redirect_stdout(io.StringIO()):

@@ -1,0 +1,1953 @@
+{
+  "AUDIT": {
+    "checks_passed": 11,
+    "checks_total": 11,
+    "pq_oid": "2.16.840.1.101.3.4.3.17",
+    "pq_sig_len": 2420,
+    "classical_oid": "1.2.840.10045.4.3.2",
+    "negative_controls_ok": true,
+    "all_passed": true
+  },
+  "E1": {
+    "name": "E1 plain sequential hybrid downgrade",
+    "classical_algo": "ECDSA P-256",
+    "pq_algo": "ML-DSA-44",
+    "orders": {
+      "A": {
+        "label": "order A (conventional): classical inner, PQ outer",
+        "first_signed": {
+          "field": "ClassicalLayer",
+          "algo": "ECDSA P-256"
+        },
+        "second_signed": {
+          "field": "PQLayer",
+          "algo": "ML-DSA-44"
+        },
+        "inner_path": "_e1_A_1.pdf",
+        "inner_size": 6644,
+        "inner_sha256": "f8fbd2162ab0264a2926416bbad401adb42f8ef775019308b81b9f789b4c78ca",
+        "hybrid_path": "_e1_A_2.pdf",
+        "hybrid_size": 29602,
+        "hybrid_sha256": "6d46d082606aa5bb00c82579bf9eaec0491e2b392415ee7038b031be74614957",
+        "boundaries": 3,
+        "cut_points": 2,
+        "intact_signatures": [
+          {
+            "field": "ClassicalLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "FORM_FILLING"
+          },
+          {
+            "field": "PQLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_FILE",
+            "modification_level": "NONE"
+          }
+        ],
+        "cuts": [
+          {
+            "index": 0,
+            "offset": 1458,
+            "size": 1458,
+            "surviving": [],
+            "valid_document": false,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false
+          },
+          {
+            "index": 1,
+            "offset": 6644,
+            "size": 6644,
+            "surviving": [
+              "ClassicalLayer"
+            ],
+            "valid_document": true,
+            "classical_only": true,
+            "pq_only": false,
+            "identical_to_inner": true
+          }
+        ],
+        "cuts_valid_document": 1,
+        "cuts_classical_only": 1,
+        "cuts_pq_only": 0,
+        "bytes_discarded": 22958
+      },
+      "B": {
+        "label": "order B (proposed): PQ inner, classical outer",
+        "first_signed": {
+          "field": "PQLayer",
+          "algo": "ML-DSA-44"
+        },
+        "second_signed": {
+          "field": "ClassicalLayer",
+          "algo": "ECDSA P-256"
+        },
+        "inner_path": "_e1_B_1.pdf",
+        "inner_size": 23603,
+        "inner_sha256": "867e0717ef6ff852b4b17d74ac2a05391f0f86b93edfb923d25cfa34d8e2260f",
+        "hybrid_path": "_e1_B_2.pdf",
+        "hybrid_size": 28808,
+        "hybrid_sha256": "28a67b21f365c0afff7545171fd74f6d2bf360fafebfe164f84d823a3f9e0cf6",
+        "boundaries": 3,
+        "cut_points": 2,
+        "intact_signatures": [
+          {
+            "field": "PQLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "FORM_FILLING"
+          },
+          {
+            "field": "ClassicalLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_FILE",
+            "modification_level": "NONE"
+          }
+        ],
+        "cuts": [
+          {
+            "index": 0,
+            "offset": 1458,
+            "size": 1458,
+            "surviving": [],
+            "valid_document": false,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false
+          },
+          {
+            "index": 1,
+            "offset": 23603,
+            "size": 23603,
+            "surviving": [
+              "PQLayer"
+            ],
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": true,
+            "identical_to_inner": true
+          }
+        ],
+        "cuts_valid_document": 1,
+        "cuts_classical_only": 0,
+        "cuts_pq_only": 1,
+        "bytes_discarded": 5205
+      }
+    }
+  },
+  "E2": {
+    "name": "E2 PAdES-B-LTA downgrade under a test PKI",
+    "classical_algo": "ECDSA P-256",
+    "pq_algo": "ML-DSA-44",
+    "tsa_algo": "RSA 2048",
+    "root_pem": "_e2_root.pem",
+    "orders": {
+      "A": {
+        "label": "order A (conventional): classical inner, PQ outer",
+        "first_signed": {
+          "field": "ClassicalLayer",
+          "algo": "ECDSA P-256"
+        },
+        "second_signed": {
+          "field": "PQLayer",
+          "algo": "ML-DSA-44"
+        },
+        "inner_path": "_e2_A_inner.pdf",
+        "inner_size": 27850,
+        "inner_sha256": "c10c262f74905f88272e0eac9f4b275a840e82856b5c2ef68bccbae8f115c294",
+        "hybrid_path": "_e2_A_hybrid.pdf",
+        "hybrid_size": 64133,
+        "hybrid_sha256": "8bd5a3deee42c10e7e513b9f33a679df5999c195081ac2ea29337cc438be8cc3",
+        "boundaries": 7,
+        "cut_points": 6,
+        "intact_signatures": [
+          {
+            "field": "ClassicalLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "FORM_FILLING"
+          },
+          {
+            "field": "DocTimeStamp",
+            "timestamp": true,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "FORM_FILLING"
+          },
+          {
+            "field": "PQLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "LTA_UPDATES"
+          },
+          {
+            "field": "DocTimeStamp",
+            "timestamp": true,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "LTA_UPDATES"
+          }
+        ],
+        "cuts": [
+          {
+            "index": 0,
+            "offset": 1526,
+            "size": 1526,
+            "surviving": [],
+            "surviving_timestamps": 0,
+            "valid_document": false,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 1,
+            "offset": 15092,
+            "size": 15092,
+            "surviving": [
+              "ClassicalLayer"
+            ],
+            "surviving_timestamps": 0,
+            "valid_document": true,
+            "classical_only": true,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 2,
+            "offset": 25969,
+            "size": 25969,
+            "surviving": [
+              "ClassicalLayer"
+            ],
+            "surviving_timestamps": 1,
+            "valid_document": true,
+            "classical_only": true,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": true
+          },
+          {
+            "index": 3,
+            "offset": 27850,
+            "size": 27850,
+            "surviving": [
+              "ClassicalLayer"
+            ],
+            "surviving_timestamps": 1,
+            "valid_document": true,
+            "classical_only": true,
+            "pq_only": false,
+            "identical_to_inner": true,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 4,
+            "offset": 52228,
+            "size": 52228,
+            "surviving": [
+              "ClassicalLayer",
+              "PQLayer"
+            ],
+            "surviving_timestamps": 1,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 5,
+            "offset": 62147,
+            "size": 62147,
+            "surviving": [
+              "ClassicalLayer",
+              "PQLayer"
+            ],
+            "surviving_timestamps": 2,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": true
+          }
+        ],
+        "cuts_valid_document": 5,
+        "cuts_classical_only": 3,
+        "cuts_pq_only": 0,
+        "bytes_discarded": 36283
+      },
+      "B": {
+        "label": "order B (proposed): PQ inner, classical outer",
+        "first_signed": {
+          "field": "PQLayer",
+          "algo": "ML-DSA-44"
+        },
+        "second_signed": {
+          "field": "ClassicalLayer",
+          "algo": "ECDSA P-256"
+        },
+        "inner_path": "_e2_B_inner.pdf",
+        "inner_size": 37302,
+        "inner_sha256": "d4bf5ba15ce9af01b72c2fb0ed532eeb7347ae38ad47dc82139cb5f4b9dc3852",
+        "hybrid_path": "_e2_B_hybrid.pdf",
+        "hybrid_size": 61582,
+        "hybrid_sha256": "d36123680393c314f0bc87876087bbedc63dded508b14bf016aa62346417e4c0",
+        "boundaries": 7,
+        "cut_points": 6,
+        "intact_signatures": [
+          {
+            "field": "PQLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "FORM_FILLING"
+          },
+          {
+            "field": "DocTimeStamp",
+            "timestamp": true,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "FORM_FILLING"
+          },
+          {
+            "field": "ClassicalLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "LTA_UPDATES"
+          },
+          {
+            "field": "DocTimeStamp",
+            "timestamp": true,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "LTA_UPDATES"
+          }
+        ],
+        "cuts": [
+          {
+            "index": 0,
+            "offset": 1526,
+            "size": 1526,
+            "surviving": [],
+            "surviving_timestamps": 0,
+            "valid_document": false,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 1,
+            "offset": 25082,
+            "size": 25082,
+            "surviving": [
+              "PQLayer"
+            ],
+            "surviving_timestamps": 0,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": true,
+            "identical_to_inner": false,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 2,
+            "offset": 36420,
+            "size": 36420,
+            "surviving": [
+              "PQLayer"
+            ],
+            "surviving_timestamps": 1,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": true,
+            "identical_to_inner": false,
+            "timestamp_entire_file": true
+          },
+          {
+            "index": 3,
+            "offset": 37302,
+            "size": 37302,
+            "surviving": [
+              "PQLayer"
+            ],
+            "surviving_timestamps": 1,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": true,
+            "identical_to_inner": true,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 4,
+            "offset": 50914,
+            "size": 50914,
+            "surviving": [
+              "PQLayer",
+              "ClassicalLayer"
+            ],
+            "surviving_timestamps": 1,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": false
+          },
+          {
+            "index": 5,
+            "offset": 59596,
+            "size": 59596,
+            "surviving": [
+              "PQLayer",
+              "ClassicalLayer"
+            ],
+            "surviving_timestamps": 2,
+            "valid_document": true,
+            "classical_only": false,
+            "pq_only": false,
+            "identical_to_inner": false,
+            "timestamp_entire_file": true
+          }
+        ],
+        "cuts_valid_document": 5,
+        "cuts_classical_only": 0,
+        "cuts_pq_only": 3,
+        "bytes_discarded": 24280
+      }
+    }
+  },
+  "E3": {
+    "name": "E3 t2 append-forgery",
+    "classical_algo": "ECDSA P-256",
+    "pq_algo": "ML-DSA-44",
+    "honest_amount": "1,000 USD",
+    "forged_amount": "100,000 USD",
+    "scenarios": {
+      "S1_orderA_truncate_then_forge": {
+        "rows": [
+          {
+            "field": "ClassicalLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "OTHER"
+          },
+          {
+            "field": "ForgedClassical",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_FILE",
+            "modification_level": "NONE"
+          }
+        ],
+        "pq": {
+          "present": false,
+          "intact": false,
+          "coverage": null,
+          "modification_level": null,
+          "covers_rendered": false
+        },
+        "size": 12029,
+        "cut_offset": 6636
+      },
+      "S2_orderB_append_and_forge": {
+        "rows": [
+          {
+            "field": "PQLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "OTHER"
+          },
+          {
+            "field": "ClassicalLayer",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_REVISION",
+            "modification_level": "OTHER"
+          },
+          {
+            "field": "ForgedClassical",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_FILE",
+            "modification_level": "NONE"
+          }
+        ],
+        "pq": {
+          "present": true,
+          "intact": true,
+          "coverage": "ENTIRE_REVISION",
+          "modification_level": "OTHER",
+          "covers_rendered": false
+        },
+        "size": 34206
+      },
+      "S3_either_order_forge_from_scratch": {
+        "rows": [
+          {
+            "field": "ForgedClassical",
+            "timestamp": false,
+            "intact": true,
+            "valid": true,
+            "trusted": true,
+            "coverage": "ENTIRE_FILE",
+            "modification_level": "NONE"
+          }
+        ],
+        "pq": {
+          "present": false,
+          "intact": false,
+          "coverage": null,
+          "modification_level": null,
+          "covers_rendered": false
+        },
+        "size": 6644
+      }
+    },
+    "honest_A": {
+      "rows": [
+        {
+          "field": "ClassicalLayer",
+          "timestamp": false,
+          "intact": true,
+          "valid": true,
+          "trusted": true,
+          "coverage": "ENTIRE_REVISION",
+          "modification_level": "FORM_FILLING"
+        },
+        {
+          "field": "PQLayer",
+          "timestamp": false,
+          "intact": true,
+          "valid": true,
+          "trusted": true,
+          "coverage": "ENTIRE_FILE",
+          "modification_level": "NONE"
+        }
+      ],
+      "size": 29594
+    },
+    "honest_B": {
+      "rows": [
+        {
+          "field": "PQLayer",
+          "timestamp": false,
+          "intact": true,
+          "valid": true,
+          "trusted": true,
+          "coverage": "ENTIRE_REVISION",
+          "modification_level": "FORM_FILLING"
+        },
+        {
+          "field": "ClassicalLayer",
+          "timestamp": false,
+          "intact": true,
+          "valid": true,
+          "trusted": true,
+          "coverage": "ENTIRE_FILE",
+          "modification_level": "NONE"
+        }
+      ],
+      "pq": {
+        "present": true,
+        "intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "FORM_FILLING",
+        "covers_rendered": true
+      },
+      "size": 28804
+    },
+    "orderB_cuts": [
+      {
+        "index": 0,
+        "offset": 1458,
+        "surviving": [],
+        "classical_only": false
+      },
+      {
+        "index": 1,
+        "offset": 23603,
+        "surviving": [
+          "PQLayer"
+        ],
+        "classical_only": false
+      }
+    ],
+    "orderB_cuts_classical_only": 0
+  },
+  "E4": {
+    "name": "E4 verifier rule: stated, implemented, measured",
+    "benign_levels": [
+      "FORM_FILLING",
+      "LTA_UPDATES",
+      "NONE"
+    ],
+    "cases": [
+      {
+        "scenario": "plain order B, honest",
+        "file": "_e4_B_2.pdf",
+        "legitimate": true,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": true,
+        "proposed_why": "R1 and R2 hold (PQ modification level FORM_FILLING)",
+        "naive_correct": true,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "plain order B, t2 append-forgery",
+        "file": "_e4_B_forged.pdf",
+        "legitimate": false,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": false,
+        "proposed_why": "R2 fails: a later revision altered page content (OTHER)",
+        "naive_correct": false,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "plain order A, honest",
+        "file": "_e4_A_2.pdf",
+        "legitimate": true,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": true,
+        "proposed_why": "R1 and R2 hold (PQ modification level NONE)",
+        "naive_correct": true,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "plain order A, truncation-downgraded",
+        "file": "_e4_A_downgraded.pdf",
+        "legitimate": false,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": false,
+        "proposed_why": "R1 fails: no post-quantum signature present",
+        "naive_correct": false,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "plain order A, downgraded then forged",
+        "file": "_e4_A_forged.pdf",
+        "legitimate": false,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": false,
+        "proposed_why": "R1 fails: no post-quantum signature present",
+        "naive_correct": false,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "fabricated from scratch, classical only",
+        "file": "_e4_scratch_forged.pdf",
+        "legitimate": false,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": false,
+        "proposed_why": "R1 fails: no post-quantum signature present",
+        "naive_correct": false,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "B-LTA order B, honest (timestamps after PQ)",
+        "file": "_e4l_B_hybrid.pdf",
+        "legitimate": true,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": true,
+        "proposed_why": "R1 and R2 hold (PQ modification level FORM_FILLING)",
+        "naive_correct": true,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "B-LTA order B, t2 append-forgery",
+        "file": "_e4l_B_forged.pdf",
+        "legitimate": false,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": false,
+        "proposed_why": "R2 fails: a later revision altered page content (OTHER)",
+        "naive_correct": false,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "B-LTA order A, honest",
+        "file": "_e4l_A_hybrid.pdf",
+        "legitimate": true,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": true,
+        "proposed_why": "R1 and R2 hold (PQ modification level LTA_UPDATES)",
+        "naive_correct": true,
+        "proposed_correct": true
+      },
+      {
+        "scenario": "B-LTA order A, truncation-downgraded",
+        "file": "_e4l_A_downgraded.pdf",
+        "legitimate": false,
+        "naive_accepts": true,
+        "naive_why": "all signatures intact",
+        "proposed_accepts": false,
+        "proposed_why": "R1 fails: no post-quantum signature present",
+        "naive_correct": false,
+        "proposed_correct": true
+      }
+    ],
+    "naive": {
+      "rejected_attacks": 0,
+      "missed_attacks": 6,
+      "accepted_honest": 4,
+      "rejected_honest": 0,
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "accuracy": 0.4
+    },
+    "proposed": {
+      "rejected_attacks": 6,
+      "missed_attacks": 0,
+      "accepted_honest": 4,
+      "rejected_honest": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "accuracy": 1.0
+    },
+    "n_attacks": 6,
+    "n_legitimate": 4
+  },
+  "E5": {
+    "name": "E5 cost of the mitigation",
+    "reps": 40,
+    "interleaved": true,
+    "time_ms": {
+      "A": {
+        "median": 215.95945000444772,
+        "q1": 178.05024999688612,
+        "q3": 273.75045000371756,
+        "iqr": 95.70020000683144,
+        "min": 143.6855999927502,
+        "max": 535.9195999917574,
+        "n": 40
+      },
+      "B": {
+        "median": 196.99924999440555,
+        "q1": 166.53197499545058,
+        "q3": 253.50402499680058,
+        "iqr": 86.97205000135,
+        "min": 153.88230000098702,
+        "max": 378.133499994874,
+        "n": 40
+      }
+    },
+    "size_bytes": {
+      "A": {
+        "median": 29600.0,
+        "q1": 29596.0,
+        "q3": 29600.0,
+        "iqr": 4.0,
+        "min": 29596,
+        "max": 29602,
+        "n": 40
+      },
+      "B": {
+        "median": 28808.0,
+        "q1": 28808.0,
+        "q3": 28810.0,
+        "iqr": 2.0,
+        "min": 28804,
+        "max": 28810,
+        "n": 40
+      }
+    },
+    "time_delta_ms": -18.960200010042172,
+    "time_delta_ci95": [
+      -45.59625000547385,
+      20.06950000213692
+    ],
+    "time_difference_demonstrated": false,
+    "size_delta_bytes": -792.0,
+    "observations": [
+      {
+        "block_index": 1,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 306.341200004681,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 220.875499988324,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 2,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 261.72419999784324,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 225.22760000720154,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 3,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 218.0452000029618,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 263.5387000045739,
+          "size_bytes": 28804
+        }
+      },
+      {
+        "block_index": 4,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 238.85100000188686,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 216.6956000000937,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 5,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 179.62419999821577,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 154.03900000092108,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 6,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 149.59359999920707,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 160.16499999386724,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 7,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 249.66279999352992,
+          "size_bytes": 29602
+        },
+        "B": {
+          "time_ms": 183.53160000697244,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 8,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 213.87370000593364,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 158.85120000166353,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 9,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 157.5718000094639,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 157.26989999529906,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 10,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 196.48230000166222,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 196.5409999975236,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 11,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 221.39900000183843,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 179.66189999424387,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 12,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 158.87949999887496,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 161.14159999415278,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 13,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 229.1871000052197,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 196.59859999956097,
+          "size_bytes": 28804
+        }
+      },
+      {
+        "block_index": 14,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 223.91400000196882,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 197.39989998925012,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 15,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 168.30160000245087,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 153.88230000098702,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 16,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 154.8222999990685,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 185.90250000124797,
+          "size_bytes": 28804
+        }
+      },
+      {
+        "block_index": 17,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 213.45909999217838,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 247.8572000109125,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 18,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 177.5255999964429,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 176.2865999917267,
+          "size_bytes": 28804
+        }
+      },
+      {
+        "block_index": 19,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 157.492899990757,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 166.95939999772236,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 20,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 207.67869999690447,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 186.55589999980293,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 21,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 208.1575000047451,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 158.13799999887124,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 22,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 143.6855999927502,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 179.0776999987429,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 23,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 195.1619000028586,
+          "size_bytes": 29602
+        },
+        "B": {
+          "time_ms": 241.66490000789054,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 24,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 226.22159999446012,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 166.38949999469332,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 25,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 235.49600000842474,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 311.5944000019226,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 26,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 361.8523999903118,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 288.04470000613946,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 27,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 170.58689999976195,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 164.80490000685677,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 28,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 196.76989999425132,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 219.6912999934284,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 29,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 277.75920000567567,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 302.9586999909952,
+          "size_bytes": 28804
+        }
+      },
+      {
+        "block_index": 30,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 212.95280000776984,
+          "size_bytes": 29602
+        },
+        "B": {
+          "time_ms": 266.2228999979561,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 31,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 354.4019999972079,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 378.133499994874,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 32,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 310.1833999971859,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 255.3862999920966,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 33,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 278.2681000098819,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 243.768899992574,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 34,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 182.7579000091646,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 166.0180000035325,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 35,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 165.40520000853576,
+          "size_bytes": 29602
+        },
+        "B": {
+          "time_ms": 180.71410000266042,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 36,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 241.35390001174528,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 208.71469999838155,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 37,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 393.2957999932114,
+          "size_bytes": 29596
+        },
+        "B": {
+          "time_ms": 241.86970001028385,
+          "size_bytes": 28808
+        }
+      },
+      {
+        "block_index": 38,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 301.84519999602344,
+          "size_bytes": 29602
+        },
+        "B": {
+          "time_ms": 301.17690000042785,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 39,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 535.9195999917574,
+          "size_bytes": 29600
+        },
+        "B": {
+          "time_ms": 294.26019999664277,
+          "size_bytes": 28810
+        }
+      },
+      {
+        "block_index": 40,
+        "execution_order": [
+          "A",
+          "B"
+        ],
+        "A": {
+          "time_ms": 317.8584999986924,
+          "size_bytes": 29602
+        },
+        "B": {
+          "time_ms": 302.93179998989217,
+          "size_bytes": 28808
+        }
+      }
+    ],
+    "analysis": {
+      "estimator": "median(B.time_ms) - median(A.time_ms)",
+      "paired_analysis": false,
+      "execution_order": [
+        "A",
+        "B"
+      ],
+      "randomised": false,
+      "counterbalanced": false,
+      "bootstrap": {
+        "method": "independent resampling with replacement within each order",
+        "resamples": 10000,
+        "seed": 12345,
+        "rng": "random.Random",
+        "confidence_level": 0.95,
+        "interval": "percentile",
+        "sorted_zero_based_endpoint_indices": [
+          250,
+          9749
+        ]
+      },
+      "quartiles": "statistics.quantiles(n=4, method='exclusive')",
+      "timed_scope": "two pdfdoc.sign calls; excludes key generation and make_pdf"
+    }
+  },
+  "C1": {
+    "name": "C1 control: algorithm invariance (both layers ECDSA)",
+    "warning": "RoleSimPQ is ECDSA P-256, NOT post-quantum. Control only.",
+    "classical_algo": "ECDSA P-256",
+    "rolepq_algo": "ECDSA P-256",
+    "orders": {
+      "A": {
+        "label": "order A: classical inner, role-sim PQ outer",
+        "first_signed": {
+          "field": "ClassicalLayer",
+          "algo": "ECDSA P-256"
+        },
+        "second_signed": {
+          "field": "RoleSimPQ",
+          "algo": "ECDSA P-256"
+        },
+        "inner_size": 6642,
+        "hybrid_size": 11978,
+        "boundaries": 3,
+        "cuts": [
+          {
+            "index": 0,
+            "offset": 1458,
+            "surviving": [],
+            "valid_document": false,
+            "classical_only": false,
+            "identical_to_inner": false
+          },
+          {
+            "index": 1,
+            "offset": 6642,
+            "surviving": [
+              "ClassicalLayer"
+            ],
+            "valid_document": true,
+            "classical_only": true,
+            "identical_to_inner": true
+          }
+        ],
+        "cuts_valid_document": 1,
+        "cuts_classical_only": 1
+      },
+      "B": {
+        "label": "order B: role-sim PQ inner, classical outer",
+        "first_signed": {
+          "field": "RoleSimPQ",
+          "algo": "ECDSA P-256"
+        },
+        "second_signed": {
+          "field": "ClassicalLayer",
+          "algo": "ECDSA P-256"
+        },
+        "inner_size": 6769,
+        "hybrid_size": 11974,
+        "boundaries": 3,
+        "cuts": [
+          {
+            "index": 0,
+            "offset": 1458,
+            "surviving": [],
+            "valid_document": false,
+            "classical_only": false,
+            "identical_to_inner": false
+          },
+          {
+            "index": 1,
+            "offset": 6769,
+            "surviving": [
+              "RoleSimPQ"
+            ],
+            "valid_document": true,
+            "classical_only": false,
+            "identical_to_inner": true
+          }
+        ],
+        "cuts_valid_document": 1,
+        "cuts_classical_only": 0
+      }
+    }
+  },
+  "E6": {
+    "name": "E6 form-fill probe",
+    "variants": [
+      {
+        "label": "V0 honest order-B form document",
+        "pq_present": true,
+        "pq_intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "FORM_FILLING",
+        "rule_accepts": true,
+        "why": "R1 and R2 hold (level FORM_FILLING)"
+      },
+      {
+        "label": "V1 fill existing field",
+        "pq_present": true,
+        "pq_intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "FORM_FILLING",
+        "rule_accepts": true,
+        "why": "R1 and R2 hold (level FORM_FILLING)"
+      },
+      {
+        "label": "V2 fill existing field + NeedAppearances",
+        "pq_present": true,
+        "pq_intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "FORM_FILLING",
+        "rule_accepts": true,
+        "why": "R1 and R2 hold (level FORM_FILLING)"
+      },
+      {
+        "label": "V0b honest order-B plain document",
+        "pq_present": true,
+        "pq_intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "FORM_FILLING",
+        "rule_accepts": true,
+        "why": "R1 and R2 hold (level FORM_FILLING)"
+      },
+      {
+        "label": "V3 create field then fill",
+        "pq_present": true,
+        "pq_intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "OTHER",
+        "rule_accepts": false,
+        "why": "R2 fails: level OTHER"
+      },
+      {
+        "label": "V4 /Contents override (E4's attack)",
+        "pq_present": true,
+        "pq_intact": true,
+        "coverage": "ENTIRE_REVISION",
+        "modification_level": "OTHER",
+        "rule_accepts": false,
+        "why": "R2 fails: level OTHER"
+      }
+    ],
+    "errors": []
+  },
+  "E7": {
+    "name": "E7 refined rule (changed-field set)",
+    "cases": [
+      {
+        "case": "form order-B, honest",
+        "legitimate": true,
+        "file": "_e7_form_2.pdf",
+        "level": "FORM_FILLING",
+        "coverage": "ENTIRE_REVISION",
+        "diff_type": "DiffResult",
+        "diff_attrs": [
+          "changed_form_fields",
+          "modification_level"
+        ],
+        "changed_fields": [
+          "ClassicalLayer",
+          "amount"
+        ],
+        "signature_fields": [
+          "ClassicalLayer",
+          "PQLayer"
+        ],
+        "current_accepts": true,
+        "current_why": "level FORM_FILLING is benign",
+        "refined_accepts": false,
+        "refined_why": "R2' fails: non-signature field(s) changed after the post-quantum signature: amount"
+      },
+      {
+        "case": "form order-B, t2 field-fill forgery",
+        "legitimate": false,
+        "file": "_e7_fill_0.pdf",
+        "level": "FORM_FILLING",
+        "coverage": "ENTIRE_REVISION",
+        "diff_type": "DiffResult",
+        "diff_attrs": [
+          "changed_form_fields",
+          "modification_level"
+        ],
+        "changed_fields": [
+          "ClassicalLayer",
+          "ForgedClassical",
+          "amount"
+        ],
+        "signature_fields": [
+          "ClassicalLayer",
+          "ForgedClassical",
+          "PQLayer"
+        ],
+        "current_accepts": true,
+        "current_why": "level FORM_FILLING is benign",
+        "refined_accepts": false,
+        "refined_why": "R2' fails: non-signature field(s) changed after the post-quantum signature: amount"
+      },
+      {
+        "case": "form order-B, field-fill + NeedAppearances",
+        "legitimate": false,
+        "file": "_e7_fill_1.pdf",
+        "level": "FORM_FILLING",
+        "coverage": "ENTIRE_REVISION",
+        "diff_type": "DiffResult",
+        "diff_attrs": [
+          "changed_form_fields",
+          "modification_level"
+        ],
+        "changed_fields": [
+          "ClassicalLayer",
+          "ForgedClassical",
+          "amount"
+        ],
+        "signature_fields": [
+          "ClassicalLayer",
+          "ForgedClassical",
+          "PQLayer"
+        ],
+        "current_accepts": true,
+        "current_why": "level FORM_FILLING is benign",
+        "refined_accepts": false,
+        "refined_why": "R2' fails: non-signature field(s) changed after the post-quantum signature: amount"
+      },
+      {
+        "case": "plain order-B, honest",
+        "legitimate": true,
+        "file": "_e7_plain_2.pdf",
+        "level": "FORM_FILLING",
+        "coverage": "ENTIRE_REVISION",
+        "diff_type": "DiffResult",
+        "diff_attrs": [
+          "changed_form_fields",
+          "modification_level"
+        ],
+        "changed_fields": [
+          "ClassicalLayer"
+        ],
+        "signature_fields": [
+          "ClassicalLayer",
+          "PQLayer"
+        ],
+        "current_accepts": true,
+        "current_why": "level FORM_FILLING is benign",
+        "refined_accepts": true,
+        "refined_why": "R2' holds: only signature fields changed (ClassicalLayer)"
+      },
+      {
+        "case": "plain order-B, t2 field-creation forgery",
+        "legitimate": false,
+        "file": "_e7_newfield.pdf",
+        "level": "OTHER",
+        "coverage": "ENTIRE_REVISION",
+        "diff_type": "SuspiciousModification",
+        "diff_attrs": [
+          "add_note",
+          "args",
+          "with_traceback"
+        ],
+        "changed_fields": null,
+        "signature_fields": [
+          "ClassicalLayer",
+          "ForgedClassical",
+          "PQLayer"
+        ],
+        "current_accepts": false,
+        "current_why": "R2 fails: level OTHER",
+        "refined_accepts": false,
+        "refined_why": "R2' fails: level OTHER"
+      },
+      {
+        "case": "plain order-B, t2 /Contents override",
+        "legitimate": false,
+        "file": "_e7_override.pdf",
+        "level": "OTHER",
+        "coverage": "ENTIRE_REVISION",
+        "diff_type": "SuspiciousModification",
+        "diff_attrs": [
+          "add_note",
+          "args",
+          "with_traceback"
+        ],
+        "changed_fields": null,
+        "signature_fields": [
+          "ClassicalLayer",
+          "ForgedClassical",
+          "PQLayer"
+        ],
+        "current_accepts": false,
+        "current_why": "R2 fails: level OTHER",
+        "refined_accepts": false,
+        "refined_why": "R2' fails: level OTHER"
+      },
+      {
+        "case": "plain order-A, honest",
+        "legitimate": true,
+        "file": "_e7_A_2.pdf",
+        "level": "NONE",
+        "coverage": "ENTIRE_FILE",
+        "diff_type": "DiffResult",
+        "diff_attrs": [
+          "changed_form_fields",
+          "modification_level"
+        ],
+        "changed_fields": [],
+        "signature_fields": [
+          "ClassicalLayer",
+          "PQLayer"
+        ],
+        "current_accepts": true,
+        "current_why": "level NONE is benign",
+        "refined_accepts": true,
+        "refined_why": "R2' holds: level NONE, no form change"
+      }
+    ]
+  },
+  "E8": {
+    "name": "E8 value-stability rule",
+    "cases": [
+      {
+        "case": "form order-B, honest",
+        "file": "_e7_form_2.pdf",
+        "legitimate": true,
+        "level": "FORM_FILLING",
+        "accepts": true,
+        "why": "R2'' holds: 1 ordinary field(s) unchanged across the covered revision",
+        "moved": {}
+      },
+      {
+        "case": "form order-B, t2 field-fill forgery",
+        "file": "_e7_fill_0.pdf",
+        "legitimate": false,
+        "level": "FORM_FILLING",
+        "accepts": false,
+        "why": "R2'' fails: field value changed -- amount: '1,000 USD' -> '100,000 USD'",
+        "moved": {
+          "amount": [
+            "1,000 USD",
+            "100,000 USD"
+          ]
+        }
+      },
+      {
+        "case": "form order-B, field-fill + NeedAppearances",
+        "file": "_e7_fill_1.pdf",
+        "legitimate": false,
+        "level": "FORM_FILLING",
+        "accepts": false,
+        "why": "R2'' fails: field value changed -- amount: '1,000 USD' -> '100,000 USD'",
+        "moved": {
+          "amount": [
+            "1,000 USD",
+            "100,000 USD"
+          ]
+        }
+      },
+      {
+        "case": "plain order-B, honest",
+        "file": "_e7_plain_2.pdf",
+        "legitimate": true,
+        "level": "FORM_FILLING",
+        "accepts": true,
+        "why": "R2'' holds: 0 ordinary field(s) unchanged across the covered revision",
+        "moved": {}
+      },
+      {
+        "case": "plain order-B, t2 field-creation forgery",
+        "file": "_e7_newfield.pdf",
+        "legitimate": false,
+        "level": "OTHER",
+        "accepts": false,
+        "why": "R2'' fails: level OTHER",
+        "moved": {}
+      },
+      {
+        "case": "plain order-B, t2 /Contents override",
+        "file": "_e7_override.pdf",
+        "legitimate": false,
+        "level": "OTHER",
+        "accepts": false,
+        "why": "R2'' fails: level OTHER",
+        "moved": {}
+      },
+      {
+        "case": "plain order-A, honest",
+        "file": "_e7_A_2.pdf",
+        "legitimate": true,
+        "level": "NONE",
+        "accepts": true,
+        "why": "R2'' holds: level NONE, no form change at all",
+        "moved": {}
+      }
+    ]
+  },
+  "E9": {
+    "name": "E9 rule bypass probe",
+    "rows": [
+      {
+        "rendered": true,
+        "rendered_why": "values and 0 appearance stream(s) unchanged",
+        "case": "honest plain order-B",
+        "legitimate": true,
+        "built": true,
+        "note": null,
+        "oids": {
+          "PQLayer": "2.16.840.1.101.3.4.3.17",
+          "ClassicalLayer": "1.2.840.10045.4.3.2"
+        },
+        "pq_level": "FORM_FILLING",
+        "e4": true,
+        "e4_why": "R1 and R2 hold (PQ modification level FORM_FILLING)",
+        "e7": true,
+        "e7_why": "R2' holds: only signature fields changed (ClassicalLayer)",
+        "e8": true,
+        "e8_why": "R2'' holds: 0 ordinary field(s) unchanged across the covered revision",
+        "r1_oid": true,
+        "r1_oid_why": "ML-DSA signature present in field 'PQLayer'",
+        "e8_with_oid_r1": true
+      },
+      {
+        "rendered": true,
+        "rendered_why": "values and 1 appearance stream(s) unchanged",
+        "case": "honest form order-B",
+        "legitimate": true,
+        "built": true,
+        "note": null,
+        "oids": {
+          "PQLayer": "2.16.840.1.101.3.4.3.17",
+          "ClassicalLayer": "1.2.840.10045.4.3.2"
+        },
+        "pq_level": "FORM_FILLING",
+        "e4": true,
+        "e4_why": "R1 and R2 hold (PQ modification level FORM_FILLING)",
+        "e7": false,
+        "e7_why": "R2' fails: non-signature field(s) changed after the post-quantum signature: amount",
+        "e8": true,
+        "e8_why": "R2'' holds: 1 ordinary field(s) unchanged across the covered revision",
+        "r1_oid": true,
+        "r1_oid_why": "ML-DSA signature present in field 'PQLayer'",
+        "e8_with_oid_r1": true
+      },
+      {
+        "rendered": false,
+        "rendered_why": "R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA",
+        "case": "B1a spoof: scratch, ECDSA named PQLayer",
+        "legitimate": false,
+        "built": true,
+        "note": null,
+        "oids": {
+          "PQLayer": "1.2.840.10045.4.3.2"
+        },
+        "pq_level": "NONE",
+        "e4": true,
+        "e4_why": "R1 and R2 hold (PQ modification level NONE)",
+        "e7": true,
+        "e7_why": "R2' holds: level NONE, no form change",
+        "e8": true,
+        "e8_why": "R2'' holds: level NONE, no form change at all",
+        "r1_oid": false,
+        "r1_oid_why": "R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA",
+        "e8_with_oid_r1": false
+      },
+      {
+        "rendered": false,
+        "rendered_why": "R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA",
+        "case": "B1b spoof: truncate A, override, ECDSA named PQLayer",
+        "legitimate": false,
+        "built": true,
+        "note": null,
+        "oids": {
+          "ClassicalLayer": "1.2.840.10045.4.3.2",
+          "PQLayer": "1.2.840.10045.4.3.2"
+        },
+        "pq_level": "NONE",
+        "e4": true,
+        "e4_why": "R1 and R2 hold (PQ modification level NONE)",
+        "e7": true,
+        "e7_why": "R2' holds: level NONE, no form change",
+        "e8": true,
+        "e8_why": "R2'' holds: level NONE, no form change at all",
+        "r1_oid": false,
+        "r1_oid_why": "R1 fails: field 'PQLayer' exists but its algorithm is 1.2.840.10045.4.3.2, not ML-DSA",
+        "e8_with_oid_r1": false
+      },
+      {
+        "rendered": false,
+        "rendered_why": "appearance stream changed after the PQ signature: amount",
+        "case": "B2 appearance-only forgery (/V unchanged)",
+        "legitimate": false,
+        "built": true,
+        "note": "100,000 USD",
+        "oids": {
+          "PQLayer": "2.16.840.1.101.3.4.3.17",
+          "ClassicalLayer": "1.2.840.10045.4.3.2",
+          "ForgedClassical": "1.2.840.10045.4.3.2"
+        },
+        "pq_level": "FORM_FILLING",
+        "e4": true,
+        "e4_why": "R1 and R2 hold (PQ modification level FORM_FILLING)",
+        "e7": false,
+        "e7_why": "R2' fails: non-signature field(s) changed after the post-quantum signature: amount",
+        "e8": true,
+        "e8_why": "R2'' holds: 1 ordinary field(s) unchanged across the covered revision",
+        "r1_oid": true,
+        "r1_oid_why": "ML-DSA signature present in field 'PQLayer'",
+        "e8_with_oid_r1": true
+      }
+    ]
+  },
+  "meta": {
+    "generated": "2026-09-15 16:21:19",
+    "python": "3.13.1",
+    "elapsed_seconds": 39.9,
+    "pyhanko": "0.37.0"
+  }
+}

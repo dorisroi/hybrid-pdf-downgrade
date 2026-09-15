@@ -1,0 +1,94 @@
+{
+  "run1": {
+    "identity_checks": {
+      "E1.A": true,
+      "E1.B": true,
+      "E2.A": true,
+      "E2.B": true,
+      "C1.A": true,
+      "C1.B": true
+    },
+    "signature_oids": {
+      "ClassicalLayer": {
+        "oid": "1.2.840.10045.4.3.2",
+        "signature_bytes": 72
+      },
+      "PQLayer": {
+        "oid": "2.16.840.1.101.3.4.3.17",
+        "signature_bytes": 2420
+      }
+    },
+    "timing_checks": {
+      "n_blocks": 40,
+      "A_stats": true,
+      "B_stats": true,
+      "bootstrap": true
+    },
+    "E7": {
+      "attacks": 4,
+      "honest": 3,
+      "missed": 0,
+      "false_rejections": 1,
+      "undecided": 0
+    },
+    "E8": {
+      "attacks": 4,
+      "honest": 3,
+      "missed": 0,
+      "false_rejections": 0,
+      "undecided": 0
+    },
+    "E9": {
+      "e4": {
+        "attacks": 3,
+        "honest": 2,
+        "missed": 3,
+        "false_rejections": 0,
+        "undecided": 0
+      },
+      "e7": {
+        "attacks": 3,
+        "honest": 2,
+        "missed": 2,
+        "false_rejections": 1,
+        "undecided": 0
+      },
+      "e8": {
+        "attacks": 3,
+        "honest": 2,
+        "missed": 3,
+        "false_rejections": 0,
+        "undecided": 0
+      },
+      "e8_with_oid_r1": {
+        "attacks": 3,
+        "honest": 2,
+        "missed": 1,
+        "false_rejections": 0,
+        "undecided": 0
+      },
+      "rendered": {
+        "attacks": 3,
+        "honest": 2,
+        "missed": 0,
+        "false_rejections": 0,
+        "undecided": 0
+      }
+    },
+    "honest_form_before": {
+      "amount": "1,000 USD"
+    },
+    "honest_form_after": {
+      "amount": "1,000 USD"
+    },
+    "build_errors": [],
+    "changed_field_warnings": [
+      "  !! no changed-field set on _e7_newfield.pdf; available attributes: ['add_note', 'args', 'with_traceback']"
+    ],
+    "experiment_result_lines": [
+      "  RESULT: the rule is DEFEATED by V1, V2",
+      "  RESULT: R2' does not cleanly separate the corpus. The numbers",
+      "  RESULT: R2'' separates the corpus cleanly. The rule the paper"
+    ]
+  }
+}

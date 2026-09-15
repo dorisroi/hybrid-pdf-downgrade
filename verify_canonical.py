@@ -1,4 +1,4 @@
-"""Read-only verification of the frozen canonical pair; no signing or rendering."""
+"""Read-only verification of the frozen pair and confirmation; no signing or rendering."""
 import hashlib
 import json
 from pathlib import Path
@@ -22,10 +22,13 @@ def require(condition, message):
 
 
 def main():
-    data = {tag: read(RECORD/tag/'numbers.json') for tag in ['run1', 'run2']}
+    locations = {tag: RECORD/tag for tag in ['run1', 'run2']}
+    locations['confirmation'] = ROOT/'results/canonical/20260915_162034_799680/run1'
+    data = {tag: read(location/'numbers.json') for tag, location in locations.items()}
     require(compare_runs.compare(data['run1'], data['run2']), 'Invariant comparison failed')
+    require(compare_runs.compare(data['run2'], data['confirmation']), 'Confirmation comparison failed')
     for tag, d in data.items():
-        artifacts = RECORD/tag/'artifacts'
+        artifacts = locations[tag]/'artifacts'
         rows = d['E5']['observations']
         require(len(rows) == d['E5']['reps'], tag + ': sample count')
         for order in ['A', 'B']:

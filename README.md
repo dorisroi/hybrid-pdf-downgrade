@@ -38,10 +38,11 @@ creates new artifacts while retaining the preceding DSS measurements.
 ## Canonical measurement record
 
 The current canonical record is
-[`results/canonical/20260915_052647_101641/run2/numbers.json`](results/canonical/20260915_052647_101641/run2/numbers.json).
-`run1` in the same directory is the independent replication. Run2 was selected
-before the validation pair completed, not according to its timing result.
-See [the evidence index](results/canonical/20260915_052647_101641/README.md)
+[`results/canonical/20260915_162034_799680/run1/numbers.json`](results/canonical/20260915_162034_799680/run1/numbers.json).
+This is one additional confirmation run, not a timing-selected retry. It
+agrees on 389 selected invariants with the preceding independent run
+`20260915_052647_101641/run2`. The preceding pair is retained in full.
+See [the evidence index](results/canonical/20260915_162034_799680/README.md)
 for acquisition provenance, original logs, artifact hashes and limitations.
 The older `results/numbers.json` and `results/reference/` are retained as
 historical records; they are not the source of the current timing values.
@@ -49,7 +50,7 @@ historical records; they are not the source of the current timing values.
 ```powershell
 python verify_canonical.py
 python -m unittest discover -s tests -v
-python reproduce.py --with-dss --reference results/canonical/20260915_052647_101641/run2/numbers.json
+python reproduce.py --with-dss --reference results/canonical/20260915_162034_799680/run1/numbers.json
 ```
 
 The comparator checks 389 selected invariants, including E6-E9 and the
