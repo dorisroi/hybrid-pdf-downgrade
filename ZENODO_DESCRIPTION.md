@@ -28,7 +28,11 @@ make reproduce                   # or: docker build -t hybridpdf-repro . (see Do
 PASS/FAIL/NOTE verdict per reviewer question with evidence from the run, and
 exits non-zero if any claim or invariant fails to reproduce.
 
-`results/numbers.json` is the full record; `compare_runs.py` compares two runs
+The frozen record used in the paper is
+`results/canonical/20260915_162034_799680/run1/numbers.json`.
+The former root records are preserved as `results/numbers_legacy_20260913.json`
+and `results/compare_report_legacy_20260913.txt`. A fresh run writes
+`results/numbers.json` as replaceable output; `compare_runs.py` compares two runs
 and separates real regressions from the byte-level drift that DER-encoded
 ECDSA signatures cause between runs.
 
