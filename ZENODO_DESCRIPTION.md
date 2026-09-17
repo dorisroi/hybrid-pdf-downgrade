@@ -1,4 +1,4 @@
-# Artifact — Put the Post-Quantum Signature First
+# hybrid-pdf-downgrade: downgrade attack on hybrid PDF signatures
 
 Reproduces every experimental figure in the accompanying paper on format-layer
 downgrade of sequential hybrid PDF signatures.
