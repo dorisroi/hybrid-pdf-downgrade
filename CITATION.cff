@@ -17,8 +17,13 @@ authors:
     given-names: "Phê Đô"
     affiliation: "Thang Long University"
 version: 1.0.1
-date-released: 2026-09-17
+date-released: 2026-09-19
 repository-code: "https://github.com/dorisroi/hybrid-pdf-downgrade"
+doi: "10.5281/zenodo.22806085"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22806085"
+    description: "Concept DOI resolving to the latest version of the artifact"
 license: Apache-2.0
 keywords:
   - post-quantum cryptography

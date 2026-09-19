@@ -1,5 +1,7 @@
 # Hybrid PDF Signature Experiments
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22806085.svg)](https://doi.org/10.5281/zenodo.22806085)
+
 **Data used in the paper:**
 [`results/canonical/20260915_162034_799680/run1/numbers.json`](results/canonical/20260915_162034_799680/run1/numbers.json).
 Historical records and newly generated `results/numbers.json` are not the
@@ -157,3 +159,18 @@ PKI. Never use them as production credentials or trust anchors.
 The pinned environment uses Python 3.13 and pyHanko 0.37.0, with cryptography,
 asn1crypto and ReportLab. See `requirements.txt` for exact Python package
 versions and `dssval/pom.xml` for Java dependencies.
+
+## How to cite
+
+Cite both the artifact and the paper it accompanies. The concept DOI
+[10.5281/zenodo.22806085](https://doi.org/10.5281/zenodo.22806085) always
+resolves to the latest version; cite a version DOI instead when you need to
+pin the exact record you used.
+
+```
+Đinh, T. T., & Lê, P. Đ. hybrid-pdf-downgrade: downgrade attack on hybrid
+PDF signatures. Zenodo. https://doi.org/10.5281/zenodo.22806085
+```
+
+Machine-readable metadata is in `CITATION.cff`; the metadata deposited with
+each release is in `.zenodo.json`.
