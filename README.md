@@ -160,6 +160,11 @@ The pinned environment uses Python 3.13 and pyHanko 0.37.0, with cryptography,
 asn1crypto and ReportLab. See `requirements.txt` for exact Python package
 versions and `dssval/pom.xml` for Java dependencies.
 
+## Licence
+
+Everything in this repository -- code, data, logs and signed artifacts -- is
+released under Apache-2.0. The full text is in `LICENSE`.
+
 ## How to cite
 
 Cite both the artifact and the paper it accompanies. The concept DOI

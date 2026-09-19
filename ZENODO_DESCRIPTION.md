@@ -1,6 +1,6 @@
 # hybrid-pdf-downgrade: downgrade attack on hybrid PDF signatures
 
-Reproduces every experimental figure in the accompanying paper on format-layer
+Reproduces every numerical result in the accompanying paper on format-layer
 downgrade of sequential hybrid PDF signatures.
 
 ## What this is
@@ -53,4 +53,5 @@ The manuscript. Releasing code and data is not publishing the paper.
 
 ## Licence
 
-Code under Apache-2.0; data, logs and signed artifacts under CC-BY-4.0.
+Everything in this record -- code, data, logs and signed artifacts -- is
+released under Apache-2.0. The full text is in LICENSE.
